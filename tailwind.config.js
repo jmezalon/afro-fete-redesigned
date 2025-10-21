@@ -11,12 +11,8 @@ export default {
           DEFAULT: '#FF6B6B',
           light: '#FFB4B4',
         },
-        gray: {
-          light: '#F5F5F5',
-        },
-        text: {
-          dark: '#2D2D2D',
-        },
+        'custom-gray-light': '#F5F5F5',
+        'custom-text-dark': '#2D2D2D',
       },
       fontFamily: {
         serif: ['Playfair Display', 'Georgia', 'serif'],
