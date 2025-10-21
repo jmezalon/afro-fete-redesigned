@@ -16,6 +16,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/login" element={<Navigate to="/signin" replace />} />
           <Route path="/firebase-test" element={<FirebaseTest />} />
 
           {/* Protected Routes */}

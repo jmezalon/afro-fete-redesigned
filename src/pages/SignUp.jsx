@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo/logo.png';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -112,13 +114,14 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
+      <Navbar />
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           {/* Heading with coral underline */}
           <div className="text-center mb-8">
-            <h1 className="font-serif text-5xl text-gray-900 mb-2">Sign Up</h1>
-            <div className="w-2/3 h-0.5 bg-coral mx-auto"></div>
+            <h1 className="font-serif text-5xl text-gray-900 mb-3">Sign Up</h1>
+            <div className="w-3/4 h-0.5 bg-[#E57373] mx-auto"></div>
           </div>
 
           {/* Logo */}
@@ -315,13 +318,14 @@ const SignUp = () => {
             Already a member?{' '}
             <Link
               to="/signin"
-              className="text-gray-900 underline hover:text-coral transition-colors font-medium"
+              className="text-gray-900 underline hover:text-[#FF6B6B] transition-colors font-medium"
             >
               Log In
             </Link>
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

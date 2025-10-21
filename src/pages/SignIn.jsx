@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/logo/logo.png';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -74,17 +76,18 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
+      <Navbar />
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           {/* Heading with coral underline */}
           <div className="text-center mb-8">
-            <h1 className="font-serif text-5xl text-gray-900 mb-2">Log In</h1>
-            <div className="w-2/3 h-0.5 bg-coral mx-auto"></div>
+            <h1 className="font-serif text-5xl text-gray-900 mb-3">Log In</h1>
+            <div className="w-3/4 h-0.5 bg-[#E57373] mx-auto"></div>
           </div>
 
           {/* Logo */}
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-center mb-8">
             <img src={logo} alt="Afro-fete" className="h-24 w-auto" />
           </div>
 
@@ -95,12 +98,12 @@ const SignIn = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder="Username"
                 value={formData.email}
                 onChange={handleChange}
                 className={`w-full px-4 py-3 bg-gray-100 border ${
                   errors.email ? 'border-red-500' : 'border-transparent'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent transition-all`}
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent transition-all`}
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -117,7 +120,7 @@ const SignIn = () => {
                 onChange={handleChange}
                 className={`w-full px-4 py-3 bg-gray-100 border ${
                   errors.password ? 'border-red-500' : 'border-transparent'
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-coral focus:border-transparent transition-all`}
+                } rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent transition-all`}
               />
               {errors.password && (
                 <p className="mt-1 text-sm text-red-600">{errors.password}</p>
@@ -135,7 +138,7 @@ const SignIn = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-coral hover:bg-coral-dark text-white font-medium py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+              className="w-full bg-[#E57373] hover:bg-[#FF6B6B] text-white font-medium py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               {isLoading ? (
                 <>
@@ -172,13 +175,14 @@ const SignIn = () => {
             Not a member?{' '}
             <Link
               to="/signup"
-              className="text-gray-900 underline hover:text-coral transition-colors font-medium"
+              className="text-gray-900 underline hover:text-[#FF6B6B] transition-colors font-medium"
             >
               Sign Up
             </Link>
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

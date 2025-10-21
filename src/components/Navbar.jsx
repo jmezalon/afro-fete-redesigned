@@ -12,8 +12,6 @@ const Navbar = () => {
   const navLinks = [
     { name: 'About Us', path: '/about' },
     { name: 'How It Works', path: '/how-it-works' },
-    { name: 'Post A Photo', path: '/post-photo' },
-    { name: 'Photo Gallery', path: '/gallery' },
   ];
 
   const handleSignOut = async () => {
@@ -97,7 +95,7 @@ const Navbar = () => {
               </div>
             ) : (
               <>
-                <Link to="/login">
+                <Link to="/signin">
                   <button className="px-6 py-2 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200">
                     Log In
                   </button>
@@ -195,7 +193,7 @@ const Navbar = () => {
                 ) : (
                   <>
                     <Link
-                      to="/login"
+                      to="/signin"
                       className="block w-full text-center px-4 py-2 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200"
                       onClick={() => setMobileMenuOpen(false)}
                     >
