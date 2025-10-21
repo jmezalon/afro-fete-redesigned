@@ -1,6 +1,12 @@
 // Design system theme constants
 // Based on wireframe analysis and brand guidelines
 
+// Asset paths
+export const ASSETS = {
+  logo: '/src/assets/logo/logo.png',
+  favicon: '/src/assets/logo/favicon.ico',
+};
+
 export const COLORS = {
   // Primary brand colors
   primary: {
@@ -163,6 +169,7 @@ export const DESIGN_GUIDELINES = {
 };
 
 export default {
+  ASSETS,
   COLORS,
   TYPOGRAPHY,
   SPACING,
