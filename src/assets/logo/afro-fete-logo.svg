@@ -1,0 +1,27 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dancing figure icon -->
+  <g id="dancing-figure" transform="translate(5, 10)">
+    <!-- Head -->
+    <circle cx="12" cy="8" r="4" fill="currentColor"/>
+    <!-- Body with dynamic pose -->
+    <path d="M12 12 L10 20 M12 12 L14 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Arms in dancing pose -->
+    <path d="M12 13 L6 16 M12 13 L16 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Legs in dancing pose -->
+    <path d="M10 20 L8 28 M14 20 L18 26" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Movement lines for dynamic effect -->
+    <path d="M4 15 Q6 14 7 15" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+    <path d="M17 9 Q18 8 19 9" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <!-- Text: "afro fete" -->
+  <text x="35" y="35" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="300" fill="currentColor" letter-spacing="1">
+    afro
+  </text>
+  <text x="95" y="35" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="600" fill="currentColor" letter-spacing="1">
+    fête
+  </text>
+
+  <!-- Decorative underline accent -->
+  <line x1="95" y1="38" x2="155" y2="38" stroke="currentColor" stroke-width="0.5" opacity="0.6"/>
+</svg>
