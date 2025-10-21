@@ -17,6 +17,8 @@ export default {
           light: '#FF7B79',
           dark: '#D93D3B',
         },
+        'custom-gray-light': '#F5F5F5',
+        'custom-text-dark': '#2D2D2D',
         gray: {
           50: '#FAFAFA',
           100: '#F5F5F5',
