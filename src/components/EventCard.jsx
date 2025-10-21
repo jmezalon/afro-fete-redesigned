@@ -37,6 +37,13 @@ const EventCard = ({
   const month = format(eventDate, 'MMM').toUpperCase();
   const day = format(eventDate, 'd');
 
+  // Handle different data structures
+  const venueName = event.venueName || event.venue || '';
+  const fullAddress = event.address?.street
+    ? `${event.address.street}, ${event.address.city}, ${event.address.state} ${event.address.zip}`
+    : event.address || '';
+  const flyerImage = event.flyerUrl || event.imageUrl || '';
+
   const handleCardClick = (e) => {
     // Prevent navigation if clicking on interactive elements
     if (
@@ -74,7 +81,7 @@ const EventCard = ({
       {/* Event Flyer Image */}
       <div className="relative w-full aspect-video bg-gray-200 overflow-hidden">
         <img
-          src={event.flyerUrl}
+          src={flyerImage}
           alt={`${event.name} event flyer`}
           className={`w-full h-full object-cover transition-all duration-300 ${
             imageLoaded ? 'opacity-100' : 'opacity-0'
@@ -120,13 +127,13 @@ const EventCard = ({
           {/* Event Details */}
           <div className="flex-1 min-w-0 pr-12">
             <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2 group-hover:text-[#FF6B6B] transition-colors duration-200">
-              {event.name}
+              {event.name || event.title}
             </h3>
             <p className="text-sm font-medium text-gray-700 mb-1 truncate">
-              {event.venueName}
+              {venueName}
             </p>
             <p className="text-xs text-gray-500 mb-2 line-clamp-2">
-              {event.address}
+              {fullAddress}
             </p>
 
             {/* Hashtags */}

@@ -3,6 +3,7 @@ import { AuthProvider, ProtectedRoute } from './context/AuthContext';
 import './App.css';
 
 // Pages
+import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Profile from './pages/Profile';
@@ -14,6 +15,7 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Public Routes */}
+          <Route path="/" element={<Landing />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/login" element={<Navigate to="/signin" replace />} />
@@ -28,9 +30,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* Default redirect to sign up */}
-          <Route path="/" element={<Navigate to="/signup" replace />} />
         </Routes>
       </AuthProvider>
     </Router>
