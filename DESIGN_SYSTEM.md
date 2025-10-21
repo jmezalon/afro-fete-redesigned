@@ -9,9 +9,10 @@ This document outlines the design system for Afro Fete, derived from wireframe a
 "Making memories is only a #hashtag away!"
 
 ### Logo
-- Location: `src/assets/logo:favicon/Screenshot 2025-10-21 at 11.19.49 AM.png`
+- Logo: `src/assets/logo/logo.png`
+- Favicon: `src/assets/logo/favicon.ico`
 - The logo features elegant serif typography with an Africa continent outline
-- Used as favicon in the application
+- Both logo and favicon are available in the logo folder
 
 ## Color Palette
 
