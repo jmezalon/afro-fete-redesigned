@@ -358,7 +358,7 @@ const SignUp = () => {
 
               <div className="relative z-10">
                 <div className="mb-8">
-                  <img src={logo} alt="Afro-fete" className="h-16 w-auto brightness-0 invert" />
+                  <img src={logo} alt="Afro-fete" className="h-16 w-auto" />
                 </div>
 
                 <h2 className="text-4xl font-bold mb-4 leading-tight">
