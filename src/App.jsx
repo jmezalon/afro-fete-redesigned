@@ -12,6 +12,8 @@ import CategoryView from './pages/CategoryView';
 import EventDetail from './pages/EventDetail';
 import PhotoGallery from './pages/PhotoGallery';
 import CreateEvent from './pages/CreateEvent';
+import About from './pages/About';
+import HowItWorks from './pages/HowItWorks';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Landing />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
           <Route
             path="/signup"
             element={
