@@ -56,16 +56,16 @@ const Newsletter = () => {
   return (
     <section className="bg-[#FF6B6B] py-16 px-4">
       <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8">
           Stay up to date with the latest events!
         </h2>
 
         {status === 'success' ? (
           <div className="bg-white rounded-lg p-6 shadow-lg">
-            <p className="text-2xl font-semibold text-[#FF6B6B] mb-2">
+            <p className="text-xl sm:text-2xl font-semibold text-[#FF6B6B] mb-2">
               Thanks for subscribing!
             </p>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               We'll keep you updated with the latest events and news.
             </p>
           </div>

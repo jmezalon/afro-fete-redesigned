@@ -262,18 +262,18 @@ const Profile = () => {
       {/* Profile Section */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold text-gray-900 text-center mb-2">Profile</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center mb-2">Profile</h1>
           <div className="w-32 h-1 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] mx-auto mb-12"></div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
             {/* Left: Profile Picture */}
             <div className="flex flex-col items-center">
               <div className="relative">
-                <div className="w-64 h-64 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-6xl font-bold shadow-2xl">
+                <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-5xl sm:text-6xl font-bold shadow-2xl">
                   {getUserInitials()}
                 </div>
-                <button className="absolute bottom-2 right-2 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border-4 border-gray-50">
-                  <Camera className="w-6 h-6 text-[#FF6B6B]" />
+                <button className="absolute bottom-2 right-2 w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border-4 border-gray-50">
+                  <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B6B]" />
                 </button>
               </div>
               <p className="mt-6 text-gray-600 text-sm">

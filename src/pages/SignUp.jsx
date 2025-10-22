@@ -131,8 +131,8 @@ const SignUp = () => {
                 </div>
 
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-                  <p className="text-gray-600">Join the community and discover amazing events!</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+                  <p className="text-sm sm:text-base text-gray-600">Join the community and discover amazing events!</p>
                 </div>
 
                 {/* Form */}

@@ -182,10 +182,10 @@ const CreateEvent = () => {
       <Navbar />
 
       {/* Header */}
-      <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Create New Event</h1>
-          <p className="text-lg text-gray-600">Fill in the details below to create your event</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">Create New Event</h1>
+          <p className="text-base sm:text-lg text-gray-600">Fill in the details below to create your event</p>
         </div>
       </section>
 
@@ -194,8 +194,8 @@ const CreateEvent = () => {
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Basic Information */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Basic Information</h2>
+            <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 shadow-sm">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Basic Information</h2>
 
               {/* Event Title */}
               <div className="mb-6">
@@ -522,7 +522,7 @@ const CreateEvent = () => {
             )}
 
             {/* Submit Buttons */}
-            <div className="flex gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 type="button"
                 onClick={() => navigate('/profile')}

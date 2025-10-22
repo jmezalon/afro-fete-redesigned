@@ -192,7 +192,7 @@ const EventDetail = () => {
         <aside
           className={`${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-80 lg:w-1/5 bg-gray-50 p-6 overflow-y-auto transition-transform duration-300 z-40 lg:z-0`}
+          } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-72 lg:w-1/5 bg-gray-50 p-6 overflow-y-auto transition-transform duration-300 z-40 lg:z-0`}
           style={{ top: '80px' }}
         >
           <h3 className="text-lg font-bold text-gray-900 mb-4 lg:hidden">Categories</h3>
@@ -278,7 +278,7 @@ const EventDetail = () => {
                 {/* Event Information */}
                 <div className="flex-1 pr-12">
                   {/* Event Title */}
-                  <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                     {eventTitle}
                   </h1>
 
@@ -325,7 +325,7 @@ const EventDetail = () => {
                           <button
                             key={index}
                             onClick={() => handleHashtagClick(hashtag)}
-                            className="text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded px-2 py-1"
+                            className="text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded px-3 py-2"
                           >
                             {hashtag.startsWith('#') ? hashtag : `#${hashtag}`}
                           </button>

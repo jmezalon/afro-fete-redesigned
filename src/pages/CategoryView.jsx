@@ -255,7 +255,7 @@ const CategoryView = () => {
         <aside
           className={`${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-80 lg:w-1/5 bg-gray-50 p-6 overflow-y-auto transition-transform duration-300 z-40 lg:z-0`}
+          } lg:translate-x-0 fixed lg:sticky top-0 left-0 h-screen lg:h-auto w-72 lg:w-1/5 bg-gray-50 p-6 overflow-y-auto transition-transform duration-300 z-40 lg:z-0`}
           style={{ top: '80px' }}
         >
           <h3 className="text-lg font-bold text-gray-900 mb-4 lg:hidden">Categories</h3>
@@ -295,7 +295,7 @@ const CategoryView = () => {
           {/* Category Header */}
           <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 sm:mb-8">
                 <span className="text-gray-400">#</span>
                 <span className="italic">{currentCategory.name}</span>
               </h1>
@@ -317,13 +317,13 @@ const CategoryView = () => {
           {/* Time Filter Tabs */}
           <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-200">
             <div className="max-w-6xl mx-auto">
-              <div className="flex justify-center overflow-x-auto">
-                <div className="inline-flex gap-4 bg-gray-50 rounded-full p-2">
+              <div className="flex justify-center overflow-x-auto -mx-4 px-4">
+                <div className="inline-flex gap-2 sm:gap-4 bg-gray-50 rounded-full p-2">
                   {timeFilters.map((filter) => (
                     <button
                       key={filter}
                       onClick={() => handleTimeFilterChange(filter)}
-                      className={`px-6 py-2.5 text-sm sm:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
+                      className={`px-4 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
                         activeTimeFilter === filter
                           ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-md'
                           : 'text-gray-600 hover:text-[#FF6B6B] hover:bg-white'

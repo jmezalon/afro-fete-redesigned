@@ -114,7 +114,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-[#FF6B6B] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#FF6B6B]"
+            className="md:hidden p-3 rounded-md text-gray-700 hover:text-[#FF6B6B] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#FF6B6B]"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -126,94 +126,75 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 md:hidden transform transition-transform duration-300 ease-in-out">
-            <div className="flex items-center justify-between p-4 border-b">
-              <span className="text-lg font-semibold text-gray-800">Menu</span>
-              <button
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-md text-gray-700 hover:text-[#FF6B6B] hover:bg-gray-100"
-                aria-label="Close menu"
-              >
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-
-            <div className="flex flex-col p-4 space-y-4">
-              {/* Mobile User Section */}
-              {user && (
-                <div className="pb-4 border-b border-gray-200">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center">
-                      {getUserInitials()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
-                        {user.fullName || user.email}
-                      </p>
-                    </div>
-                  </div>
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
+            {/* Mobile User Section */}
+            {user && (
+              <div className="flex items-center justify-center space-x-3 pb-4 border-b border-gray-200">
+                <div className="w-10 h-10 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center">
+                  {getUserInitials()}
                 </div>
-              )}
+                <p className="text-sm font-medium text-gray-900">
+                  {user.fullName || user.email}
+                </p>
+              </div>
+            )}
 
-              {/* Mobile Nav Links */}
+            {/* Mobile Nav Links */}
+            <div className="flex flex-col items-center space-y-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-gray-700 hover:text-[#FF6B6B] transition-colors duration-200 font-medium py-2"
+                  className="text-gray-700 hover:text-[#FF6B6B] transition-colors duration-200 font-medium text-lg"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
+            </div>
 
-              {/* Mobile Auth Buttons */}
-              <div className="pt-4 border-t border-gray-200 space-y-3">
-                {user ? (
-                  <>
-                    <Link
-                      to="/profile"
-                      className="block w-full text-center px-4 py-2 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="w-full px-4 py-2 bg-[#FF6B6B] text-white rounded-lg font-medium hover:bg-[#ff5252] transition-colors duration-200"
-                    >
-                      Log Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link
-                      to="/signin"
-                      className="block w-full text-center px-4 py-2 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Log In
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="block w-full text-center px-4 py-2 bg-[#FF6B6B] text-white rounded-lg font-medium hover:bg-[#ff5252] transition-colors duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      Sign Up
-                    </Link>
-                  </>
-                )}
-              </div>
+            {/* Mobile Auth Buttons */}
+            <div className="pt-4 border-t border-gray-200 flex flex-col items-center space-y-3 max-w-sm mx-auto w-full">
+              {user ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className="block w-full text-center px-6 py-3 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full px-6 py-3 bg-[#FF6B6B] text-white rounded-lg font-medium hover:bg-[#ff5252] transition-colors duration-200"
+                  >
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/signin"
+                    className="block w-full text-center px-6 py-3 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="block w-full text-center px-6 py-3 bg-[#FF6B6B] text-white rounded-lg font-medium hover:bg-[#ff5252] transition-colors duration-200"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
-        </>
+        </div>
       )}
     </nav>
   );

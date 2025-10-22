@@ -109,7 +109,7 @@ const EventCard = ({
         {!isOwnEvent && (
           <button
             onClick={handleFavoriteClick}
-            className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2 z-10"
+            className="absolute top-4 right-4 p-3 rounded-full bg-white shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2 z-10"
             aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
             aria-pressed={isFavorited}
           >
@@ -151,7 +151,7 @@ const EventCard = ({
                     key={index}
                     data-hashtag
                     onClick={(e) => handleHashtagClick(e, hashtag)}
-                    className="text-xs text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded px-1"
+                    className="text-xs text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded px-3 py-2"
                     aria-label={`Filter by ${hashtag}`}
                   >
                     {hashtag.startsWith('#') ? hashtag : `#${hashtag}`}

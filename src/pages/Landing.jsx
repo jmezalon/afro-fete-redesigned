@@ -203,7 +203,7 @@ const Landing = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Hero Text */}
             <div className="space-y-8">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
                 Making memories is only a{' '}
                 <span className="text-[#FF6B6B] italic">
                   #hashtag
@@ -212,7 +212,7 @@ const Landing = () => {
               </h1>
               <button
                 onClick={scrollToEvents}
-                className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] hover:from-[#ff5252] hover:to-[#FF6B6B] text-white px-10 py-4 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] hover:from-[#ff5252] hover:to-[#FF6B6B] text-white px-8 py-3 sm:px-10 sm:py-4 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
                 Explore Events
               </button>
@@ -230,7 +230,7 @@ const Landing = () => {
       {/* Choose Your Vibe Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl font-bold text-center text-gray-900 mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-900 mb-12 sm:mb-16">
             Choose Your Vibe!
           </h2>
 
@@ -255,13 +255,13 @@ const Landing = () => {
       <section ref={eventsRef} className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Time Filter Tabs */}
-          <div className="flex justify-center overflow-x-auto relative z-10">
-            <div className="inline-flex gap-6 bg-white rounded-full p-2 mb-20" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
+          <div className="flex justify-center overflow-x-auto relative z-10 -mx-4 px-4">
+            <div className="inline-flex gap-2 sm:gap-4 md:gap-6 bg-white rounded-full p-2 mb-20" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
               {timeFilters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => handleTimeFilterChange(filter)}
-                  className={`px-6 py-2.5 text-sm sm:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
+                  className={`px-4 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
                     activeTimeFilter === filter
                       ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-md'
                       : 'text-gray-600 hover:text-[#FF6B6B] hover:bg-gray-50'
