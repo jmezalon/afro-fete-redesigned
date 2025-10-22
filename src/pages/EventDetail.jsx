@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
+import HashtagFollowButton from '../components/HashtagFollowButton';
 import { getEventById } from '../services/eventService';
 import { getTrendingHashtags } from '../services/hashtagService';
 import { useAuth } from '../context/AuthContext';
@@ -320,15 +321,26 @@ const EventDetail = () => {
                   {/* Hashtags */}
                   {event.hashtags && event.hashtags.length > 0 && (
                     <div className="mb-6">
-                      <div className="flex flex-wrap gap-2">
+                      <h3 className="text-lg font-bold text-gray-900 mb-3">Hashtags</h3>
+                      <div className="flex flex-wrap gap-3">
                         {event.hashtags.map((hashtag, index) => (
-                          <button
+                          <div
                             key={index}
-                            onClick={() => handleHashtagClick(hashtag)}
-                            className="text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded px-3 py-2"
+                            className="flex items-center gap-2 bg-gradient-to-r from-pink-50 to-red-50 border-2 border-[#FF6B6B] rounded-full px-4 py-2"
                           >
-                            {hashtag.startsWith('#') ? hashtag : `#${hashtag}`}
-                          </button>
+                            <button
+                              onClick={() => handleHashtagClick(hashtag)}
+                              className="text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-semibold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-1 rounded"
+                            >
+                              {hashtag.startsWith('#') ? hashtag : `#${hashtag}`}
+                            </button>
+                            <div className="h-4 w-px bg-[#FF6B6B]"></div>
+                            <HashtagFollowButton
+                              hashtag={hashtag}
+                              variant="minimal"
+                              size="sm"
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -365,19 +377,37 @@ const EventDetail = () => {
           {/* Trending Hashtags Section */}
           <section className="pt-12 pb-0 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10">
-                Trending Hashtags
-              </h2>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                  Trending Hashtags
+                </h2>
+                <button
+                  onClick={() => navigate('/hashtags')}
+                  className="text-[#FF6B6B] hover:text-[#ff5252] font-semibold hover:underline transition-colors"
+                >
+                  Browse All
+                </button>
+              </div>
 
-              <div className="flex flex-wrap justify-center gap-3 pb-12">
+              <div className="flex flex-wrap justify-center gap-4 pb-12">
                 {trendingHashtags.map((hashtag) => (
-                  <button
+                  <div
                     key={hashtag.id}
-                    onClick={() => handleHashtagClick(hashtag.name)}
-                    className="bg-white hover:bg-gradient-to-r hover:from-[#FF6B6B] hover:to-[#FF8E8E] text-[#FF6B6B] hover:text-white px-5 py-2.5 rounded-full text-base font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 border-2 border-[#FF6B6B] hover:border-transparent"
+                    className="flex items-center gap-3 bg-white border-2 border-[#FF6B6B] rounded-full px-5 py-3 shadow-md hover:shadow-lg transition-all"
                   >
-                    #{hashtag.name}
-                  </button>
+                    <button
+                      onClick={() => handleHashtagClick(hashtag.name)}
+                      className="text-[#FF6B6B] hover:text-[#ff5252] text-base font-bold hover:underline transition-colors"
+                    >
+                      #{hashtag.name}
+                    </button>
+                    <div className="h-4 w-px bg-[#FF6B6B]"></div>
+                    <HashtagFollowButton
+                      hashtag={hashtag.name}
+                      variant="minimal"
+                      size="sm"
+                    />
+                  </div>
                 ))}
               </div>
             </div>

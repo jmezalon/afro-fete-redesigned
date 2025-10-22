@@ -13,6 +13,7 @@ const Navbar = () => {
     { name: 'About Us', path: '/about' },
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'Photo Gallery', path: '/photos' },
+    { name: 'Hashtags', path: '/hashtags' },
   ];
 
   const handleSignOut = async () => {

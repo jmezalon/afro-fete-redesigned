@@ -14,6 +14,7 @@ import PhotoGallery from './pages/PhotoGallery';
 import CreateEvent from './pages/CreateEvent';
 import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
+import HashtagBrowse from './pages/HashtagBrowse';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/category/:categoryName" element={<CategoryView />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
           <Route path="/photos" element={<PhotoGallery />} />
+          <Route path="/hashtags" element={<HashtagBrowse />} />
 
           {/* Protected Routes */}
           <Route
