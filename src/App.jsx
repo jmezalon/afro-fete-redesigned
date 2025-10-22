@@ -10,6 +10,8 @@ import Profile from './pages/Profile';
 import FirebaseTest from './pages/FirebaseTest';
 import CategoryView from './pages/CategoryView';
 import EventDetail from './pages/EventDetail';
+import PhotoGallery from './pages/PhotoGallery';
+import CreateEvent from './pages/CreateEvent';
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
           {/* Category and Event Routes */}
           <Route path="/category/:categoryName" element={<CategoryView />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
+          <Route path="/photos" element={<PhotoGallery />} />
 
           {/* Protected Routes */}
           <Route
@@ -47,6 +50,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/events/create"
+            element={
+              <ProtectedRoute>
+                <CreateEvent />
               </ProtectedRoute>
             }
           />

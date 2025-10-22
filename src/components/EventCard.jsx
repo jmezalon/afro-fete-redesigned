@@ -20,15 +20,20 @@ import { format } from 'date-fns';
  * @param {Function} props.onFavoriteToggle - Callback function when favorite is toggled
  * @param {boolean} props.isFavorited - Whether the event is currently favorited
  * @param {Function} [props.onHashtagClick] - Optional callback when hashtag is clicked
+ * @param {string} [props.currentUserId] - Current user's ID to check if they are the event creator
  */
 const EventCard = ({
   event,
   onFavoriteToggle,
   isFavorited,
-  onHashtagClick
+  onHashtagClick,
+  currentUserId
 }) => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Check if current user is the event creator
+  const isOwnEvent = currentUserId && event.promoterId === currentUserId;
 
   // Parse date if it's a string
   const eventDate = typeof event.date === 'string' ? new Date(event.date) : event.date;
@@ -100,21 +105,23 @@ const EventCard = ({
 
       {/* Event Details Section */}
       <div className="p-4 relative">
-        {/* Favorite Button - Top Right */}
-        <button
-          onClick={handleFavoriteClick}
-          className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2 z-10"
-          aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
-          aria-pressed={isFavorited}
-        >
-          <Heart
-            className={`w-5 h-5 transition-all duration-200 ${
-              isFavorited
-                ? 'fill-[#FF6B6B] stroke-[#FF6B6B]'
-                : 'stroke-gray-600 hover:stroke-[#FF6B6B]'
-            }`}
-          />
-        </button>
+        {/* Favorite Button - Top Right (only show if not own event) */}
+        {!isOwnEvent && (
+          <button
+            onClick={handleFavoriteClick}
+            className="absolute top-4 right-4 p-2 rounded-full bg-white shadow-md hover:shadow-lg hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2 z-10"
+            aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+            aria-pressed={isFavorited}
+          >
+            <Heart
+              className={`w-5 h-5 transition-all duration-200 ${
+                isFavorited
+                  ? 'fill-[#FF6B6B] stroke-[#FF6B6B]'
+                  : 'stroke-gray-600 hover:stroke-[#FF6B6B]'
+              }`}
+            />
+          </button>
+        )}
 
         {/* Date and Details Container */}
         <div className="flex gap-4">

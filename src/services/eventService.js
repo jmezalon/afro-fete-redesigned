@@ -40,7 +40,7 @@ export const createEvent = async (eventData, promoterId) => {
       date: eventData.date, // ISO string or Timestamp
       startTime: eventData.startTime,
       endTime: eventData.endTime,
-      location: eventData.location || {},
+      address: eventData.address || {},
       venue: eventData.venue || '',
       imageUrl: eventData.imageUrl || '',
       price: eventData.price || 0,

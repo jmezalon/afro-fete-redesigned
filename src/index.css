@@ -21,6 +21,12 @@
     margin: 0;
     padding: 0;
   }
+
+  /* Make placeholder text lighter/more pale */
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-gray-400 opacity-60;
+  }
 }
 
 @layer utilities {

@@ -21,10 +21,11 @@ import { uploadImage, deleteImage } from './storageService';
  * @param {string} photoData.eventId - Associated event ID (optional)
  * @param {Array<string>} photoData.hashtags - Array of hashtags
  * @param {string} userId - ID of the user uploading the photo
+ * @param {string} userName - Full name of the user uploading the photo
  * @returns {Promise<Object>} Created photo object with ID
  * @throws {Error} If photo upload fails
  */
-export const uploadPhoto = async (photoData, userId) => {
+export const uploadPhoto = async (photoData, userId, userName = 'Anonymous') => {
   try {
     const { file, caption, eventId, hashtags } = photoData;
 
@@ -39,6 +40,7 @@ export const uploadPhoto = async (photoData, userId) => {
     const photo = {
       id: photoId,
       userId,
+      userName,
       imageUrl,
       storagePath,
       caption: caption || '',
@@ -56,6 +58,43 @@ export const uploadPhoto = async (photoData, userId) => {
   } catch (error) {
     console.error('Error uploading photo:', error);
     throw new Error(error.message || 'Failed to upload photo');
+  }
+};
+
+/**
+ * Get all photos from all users
+ * @param {Object} options - Query options
+ * @param {number} options.limit - Maximum number of photos to return
+ * @returns {Promise<Array>} Array of photo objects
+ * @throws {Error} If fetching photos fails
+ */
+export const getAllPhotos = async (options = {}) => {
+  try {
+    const { limit: maxResults = 100 } = options;
+
+    const constraints = [
+      orderBy('createdAt', 'desc'),
+    ];
+
+    if (maxResults) {
+      constraints.push(limit(maxResults));
+    }
+
+    const q = query(collection(db, 'photos'), ...constraints);
+    const querySnapshot = await getDocs(q);
+
+    const photos = [];
+    querySnapshot.forEach((doc) => {
+      photos.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    return photos;
+  } catch (error) {
+    console.error('Error getting all photos:', error);
+    throw new Error(error.message || 'Failed to get all photos');
   }
 };
 
@@ -78,7 +117,7 @@ export const getUserPhotos = async (userId, options = {}) => {
     } = options;
 
     const constraints = [
-      where('postedBy', '==', userId),
+      where('userId', '==', userId),
     ];
 
     if (maxResults) {

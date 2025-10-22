@@ -315,6 +315,7 @@ const Landing = () => {
                     isFavorited={isEventFavorited(event.id)}
                     onFavoriteToggle={handleFavoriteToggle}
                     onHashtagClick={handleHashtagClick}
+                    currentUserId={user?.uid}
                   />
                 ))}
               </div>

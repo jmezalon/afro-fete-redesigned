@@ -89,6 +89,9 @@ const EventDetail = () => {
     return user?.favoriteEvents?.includes(eventId) || false;
   };
 
+  // Check if current user is the event creator
+  const isOwnEvent = user?.uid && event?.promoterId === user.uid;
+
   // Loading state
   if (loading) {
     return (
@@ -145,6 +148,22 @@ const EventDetail = () => {
 
   // Find the category for the current event
   const eventCategory = EVENT_CATEGORIES.find(cat => cat.name === event.category);
+
+  // Convert 24-hour time to 12-hour format with AM/PM
+  // If time already includes AM/PM, return as-is
+  const formatTime = (time) => {
+    if (!time) return '';
+    // Check if time already has AM/PM
+    if (time.includes('AM') || time.includes('PM')) {
+      return time;
+    }
+    // Convert 24-hour format to 12-hour format
+    const [hours, minutes] = time.split(':');
+    const hour = parseInt(hours, 10);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${ampm}`;
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -229,20 +248,22 @@ const EventDetail = () => {
 
             {/* Event Details Card */}
             <div className="bg-white rounded-2xl border border-gray-200 shadow-lg p-8 relative">
-              {/* Favorite Button */}
-              <button
-                onClick={handleFavoriteToggle}
-                className="absolute top-6 right-6 p-3 rounded-full bg-gray-50 hover:bg-gray-100 shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2"
-                aria-label={isEventFavorited() ? 'Remove from favorites' : 'Add to favorites'}
-              >
-                <Heart
-                  className={`w-6 h-6 transition-all duration-200 ${
-                    isEventFavorited()
-                      ? 'fill-[#FF6B6B] stroke-[#FF6B6B]'
-                      : 'stroke-gray-600 hover:stroke-[#FF6B6B]'
-                  }`}
-                />
-              </button>
+              {/* Favorite Button (only show if not own event) */}
+              {!isOwnEvent && (
+                <button
+                  onClick={handleFavoriteToggle}
+                  className="absolute top-6 right-6 p-3 rounded-full bg-gray-50 hover:bg-gray-100 shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2"
+                  aria-label={isEventFavorited() ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                  <Heart
+                    className={`w-6 h-6 transition-all duration-200 ${
+                      isEventFavorited()
+                        ? 'fill-[#FF6B6B] stroke-[#FF6B6B]'
+                        : 'stroke-gray-600 hover:stroke-[#FF6B6B]'
+                    }`}
+                  />
+                </button>
+              )}
 
               <div className="flex flex-col md:flex-row gap-8">
                 {/* Date Display */}
@@ -279,8 +300,8 @@ const EventDetail = () => {
                     <div className="flex items-center gap-2 mb-6">
                       <Clock className="w-5 h-5 text-[#FF6B6B]" />
                       <p className="text-gray-700">
-                        {event.startTime}
-                        {event.endTime && ` - ${event.endTime}`}
+                        {formatTime(event.startTime)}
+                        {event.endTime && ` - ${formatTime(event.endTime)}`}
                       </p>
                     </div>
                   )}

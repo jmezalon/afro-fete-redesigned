@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Camera, ChevronLeft, ChevronRight, Trash2, X, Plus, Edit, Calendar } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -12,6 +12,7 @@ import { getUserPhotos, deletePhoto } from '../services/photoService';
 const Profile = () => {
   const { user, updateProfile, toggleFavorite, followHashtag, unfollowHashtag } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Form state
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const Profile = () => {
       // Fetch user's photos
       fetchMyPhotos();
     }
-  }, [user]);
+  }, [user, location.state]);
 
   const fetchFavoriteEvents = async () => {
     try {
@@ -73,7 +74,7 @@ const Profile = () => {
     try {
       const result = await getEvents({ limit: 50 });
       const events = result.events || result;
-      const myEventsList = events.filter(event => event.createdBy === user?.uid);
+      const myEventsList = events.filter(event => event.promoterId === user?.uid);
       setMyEvents(myEventsList);
     } catch (error) {
       console.error('Error fetching my events:', error);
@@ -193,9 +194,23 @@ const Profile = () => {
   const handleFavoriteToggle = async (eventId) => {
     try {
       await toggleFavorite(eventId);
-      await fetchFavoriteEvents();
+
+      // Immediately update local state for responsive UI
+      setFavoriteEvents(prevFavorites => {
+        const updatedFavorites = prevFavorites.filter(event => event.id !== eventId);
+
+        // Adjust pagination if current page becomes empty
+        const newTotalPages = Math.ceil(updatedFavorites.length / favoritesPerPage);
+        if (favoritesPage >= newTotalPages && newTotalPages > 0) {
+          setFavoritesPage(newTotalPages - 1);
+        }
+
+        return updatedFavorites;
+      });
     } catch (error) {
       console.error('Error toggling favorite:', error);
+      // Re-fetch on error to ensure consistency
+      fetchFavoriteEvents();
     }
   };
 
@@ -448,6 +463,7 @@ const Profile = () => {
                         event={event}
                         isFavorited={user?.favoriteEvents?.includes(event.id)}
                         onFavoriteToggle={handleFavoriteToggle}
+                        currentUserId={user?.uid}
                       />
                       {/* Action Buttons Overlay */}
                       <div className="absolute bottom-4 right-4 flex gap-2">
@@ -524,6 +540,7 @@ const Profile = () => {
                     event={event}
                     isFavorited={true}
                     onFavoriteToggle={handleFavoriteToggle}
+                    currentUserId={user?.uid}
                   />
                 ))}
               </div>
