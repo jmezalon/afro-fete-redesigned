@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, ArrowRight, Sparkles, AlertCircle } from 'lucide-react';
 import logo from '../assets/logo/logo.png';
@@ -7,7 +7,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const { signIn } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -68,8 +67,7 @@ const SignIn = () => {
 
     try {
       const result = await signIn(formData.email, formData.password);
-      // Redirect to profile on success
-      navigate('/profile');
+      // PublicRoute will handle the redirect automatically
     } catch (error) {
       console.error('Sign in error:', error);
 

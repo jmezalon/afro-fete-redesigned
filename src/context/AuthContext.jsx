@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
@@ -419,6 +419,7 @@ export const ProtectedRoute = ({ children, redirectTo = '/signin' }) => {
  */
 export const PublicRoute = ({ children, redirectTo = '/profile' }) => {
   const { isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
 
   if (isLoading) {
     return (
@@ -429,7 +430,9 @@ export const PublicRoute = ({ children, redirectTo = '/profile' }) => {
   }
 
   if (isAuthenticated) {
-    return <Navigate to={redirectTo} replace />;
+    // Use the 'from' location state if available, otherwise use default redirectTo
+    const destination = location.state?.from || redirectTo;
+    return <Navigate to={destination} replace />;
   }
 
   return children;

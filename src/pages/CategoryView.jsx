@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -14,6 +14,7 @@ import { EVENT_CATEGORIES } from '../data/eventCategories';
 const CategoryView = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, toggleFavorite } = useAuth();
 
   // State
@@ -208,7 +209,7 @@ const CategoryView = () => {
   // Handle favorite toggle
   const handleFavoriteToggle = async (eventId) => {
     if (!user) {
-      navigate('/signin');
+      navigate('/signin', { state: { from: location.pathname } });
       return;
     }
 

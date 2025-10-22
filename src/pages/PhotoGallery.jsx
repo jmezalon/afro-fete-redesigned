@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Upload, User, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import Navbar from '../components/Navbar';
@@ -11,6 +11,7 @@ import { useAuth } from '../context/AuthContext';
 
 const PhotoGallery = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
 
   const [photos, setPhotos] = useState([]);
@@ -44,7 +45,7 @@ const PhotoGallery = () => {
 
   const handleUploadClick = () => {
     if (!user) {
-      navigate('/signin');
+      navigate('/signin', { state: { from: location.pathname } });
       return;
     }
     setUploadModalOpen(true);

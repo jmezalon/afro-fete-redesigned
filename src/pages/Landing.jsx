@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import CategoryCard from '../components/CategoryCard';
@@ -11,6 +11,7 @@ import { useAuth } from '../context/AuthContext';
 
 const Landing = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, toggleFavorite } = useAuth();
   const eventsRef = useRef(null);
 
@@ -165,7 +166,7 @@ const Landing = () => {
   // Handle favorite toggle
   const handleFavoriteToggle = async (eventId) => {
     if (!user) {
-      navigate('/signin');
+      navigate('/signin', { state: { from: location.pathname } });
       return;
     }
 
