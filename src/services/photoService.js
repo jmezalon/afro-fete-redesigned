@@ -78,8 +78,7 @@ export const getUserPhotos = async (userId, options = {}) => {
     } = options;
 
     const constraints = [
-      where('userId', '==', userId),
-      orderBy(orderByField, orderDirection),
+      where('postedBy', '==', userId),
     ];
 
     if (maxResults) {
@@ -89,13 +88,27 @@ export const getUserPhotos = async (userId, options = {}) => {
     const q = query(collection(db, 'photos'), ...constraints);
     const querySnapshot = await getDocs(q);
 
-    const photos = [];
+    let photos = [];
     querySnapshot.forEach((doc) => {
       photos.push({
         id: doc.id,
         ...doc.data(),
       });
     });
+
+    // Sort in memory to avoid needing a Firestore index
+    if (orderByField) {
+      photos.sort((a, b) => {
+        const aVal = a[orderByField];
+        const bVal = b[orderByField];
+
+        if (orderDirection === 'desc') {
+          return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+        } else {
+          return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+        }
+      });
+    }
 
     return photos;
   } catch (error) {

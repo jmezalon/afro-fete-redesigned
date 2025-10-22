@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  updatePassword,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
@@ -22,9 +23,9 @@ export const signUpUser = async (email, password, userData) => {
     const user = userCredential.user;
 
     // Update profile with display name if provided
-    if (userData.name) {
+    if (userData.fullName) {
       await updateProfile(user, {
-        displayName: userData.name,
+        displayName: userData.fullName,
       });
     }
 
@@ -32,11 +33,13 @@ export const signUpUser = async (email, password, userData) => {
     const userDoc = {
       uid: user.uid,
       email: user.email,
-      name: userData.name || '',
-      role: userData.role || 'user', // 'user' or 'promoter'
+      username: userData.username || '',
+      fullName: userData.fullName || '',
+      userType: userData.userType || 'partygoer',
+      favoriteEvents: [],
+      followedHashtags: [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      favorites: [],
       ...userData,
     };
 
@@ -108,24 +111,53 @@ export const updateUserProfile = async (userId, updates) => {
   try {
     const userRef = doc(db, 'users', userId);
 
+    // Check if document exists
+    const userDoc = await getDoc(userRef);
+
+    // Separate password from other updates
+    const { password, ...firestoreUpdates } = updates;
+
+    // Update password in Firebase Auth if provided
+    if (password && auth.currentUser) {
+      await updatePassword(auth.currentUser, password);
+    }
+
     // Add updatedAt timestamp
     const updateData = {
-      ...updates,
+      ...firestoreUpdates,
       updatedAt: new Date().toISOString(),
     };
 
-    await updateDoc(userRef, updateData);
+    if (!userDoc.exists()) {
+      // Create the document if it doesn't exist
+      const newUserDoc = {
+        uid: userId,
+        email: auth.currentUser?.email || '',
+        username: updates.username || '',
+        fullName: updates.fullName || '',
+        userType: 'partygoer', // Default user type
+        favoriteEvents: [],
+        followedHashtags: [],
+        createdAt: new Date().toISOString(),
+        ...updateData,
+      };
 
-    // Update auth profile if name is changed
-    if (updates.name && auth.currentUser) {
+      await setDoc(userRef, newUserDoc);
+    } else {
+      // Update existing document
+      await updateDoc(userRef, updateData);
+    }
+
+    // Update Firebase Auth profile if fullName is changed
+    if (firestoreUpdates.fullName && auth.currentUser) {
       await updateProfile(auth.currentUser, {
-        displayName: updates.name,
+        displayName: firestoreUpdates.fullName,
       });
     }
 
     // Get updated user data
-    const userDoc = await getDoc(userRef);
-    return userDoc.data();
+    const updatedUserDoc = await getDoc(userRef);
+    return updatedUserDoc.data();
   } catch (error) {
     console.error('Error updating user profile:', error);
     throw new Error(error.message || 'Failed to update user profile');

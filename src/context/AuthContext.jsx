@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
 import {
   signUpUser,
@@ -72,7 +72,7 @@ export const useAuth = () => {
  */
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(true); // For initial auth check only
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
         // Subscribe to real-time Firestore updates
         const unsubscribeFirestore = onSnapshot(
           userDocRef,
-          (docSnapshot) => {
+          async (docSnapshot) => {
             if (docSnapshot.exists()) {
               const userData = docSnapshot.data();
               setUser({
@@ -94,18 +94,37 @@ export const AuthProvider = ({ children }) => {
                 ...userData,
               });
             } else {
-              // Firestore doc doesn't exist yet (might be creating)
-              setUser({
+              // Firestore doc doesn't exist - create it
+              const newUserDoc = {
                 uid: firebaseUser.uid,
                 email: firebaseUser.email,
-              });
+                username: firebaseUser.email?.split('@')[0] || '',
+                fullName: firebaseUser.displayName || '',
+                userType: 'partygoer',
+                favoriteEvents: [],
+                followedHashtags: [],
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              };
+
+              try {
+                await setDoc(userDocRef, newUserDoc);
+                setUser(newUserDoc);
+              } catch (error) {
+                console.error('Error creating user document:', error);
+                // Still set user with minimal data so they can use the app
+                setUser({
+                  uid: firebaseUser.uid,
+                  email: firebaseUser.email,
+                });
+              }
             }
-            setIsLoading(false);
+            setIsInitializing(false);
           },
           (error) => {
             console.error('Error fetching user data from Firestore:', error);
             setError('Failed to load user data');
-            setIsLoading(false);
+            setIsInitializing(false);
           }
         );
 
@@ -116,7 +135,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         // User is signed out
         setUser(null);
-        setIsLoading(false);
+        setIsInitializing(false);
       }
     });
 
@@ -139,7 +158,6 @@ export const AuthProvider = ({ children }) => {
   const signUp = async (email, password, username, fullName, userType) => {
     try {
       setError(null);
-      setIsLoading(true);
 
       const userData = await signUpUser(email, password, {
         username,
@@ -155,8 +173,6 @@ export const AuthProvider = ({ children }) => {
       const errorMessage = getErrorMessage(err);
       setError(errorMessage);
       throw new Error(errorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -170,7 +186,6 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (email, password) => {
     try {
       setError(null);
-      setIsLoading(true);
 
       const userData = await signInUser(email, password);
       return userData;
@@ -179,8 +194,6 @@ export const AuthProvider = ({ children }) => {
       const errorMessage = getErrorMessage(err);
       setError(errorMessage);
       throw new Error(errorMessage);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -338,7 +351,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     user,
-    isLoading,
+    isLoading: isInitializing, // Expose isInitializing as isLoading for backward compatibility
     isAuthenticated: !!user,
     signUp,
     signIn,
@@ -353,7 +366,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!isLoading && children}
+      {!isInitializing && children}
     </AuthContext.Provider>
   );
 };
@@ -384,6 +397,38 @@ export const ProtectedRoute = ({ children, redirectTo = '/signin' }) => {
   }
 
   if (!isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
+  }
+
+  return children;
+};
+
+/**
+ * Public Route Component
+ * Redirects authenticated users away from auth pages (signin/signup)
+ *
+ * @param {Object} props
+ * @param {React.ReactNode} props.children - Public content (signin/signup pages)
+ * @param {string} [props.redirectTo='/profile'] - Path to redirect if authenticated
+ * @returns {React.ReactElement} Public content or redirect
+ *
+ * @example
+ * <PublicRoute>
+ *   <SignInPage />
+ * </PublicRoute>
+ */
+export const PublicRoute = ({ children, redirectTo = '/profile' }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
     return <Navigate to={redirectTo} replace />;
   }
 

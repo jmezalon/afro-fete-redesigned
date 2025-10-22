@@ -25,8 +25,8 @@ const Navbar = () => {
   };
 
   const getUserInitials = () => {
-    if (user?.displayName) {
-      const names = user.displayName.split(' ');
+    if (user?.fullName) {
+      const names = user.fullName.split(' ');
       return names.length > 1
         ? `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase()
         : names[0][0].toUpperCase();
@@ -35,23 +35,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md">
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center flex-shrink-0">
-            <img src={logo} alt="Afro-fete Logo" className="h-10 w-auto" />
+          <Link to="/" className="flex items-center flex-shrink-0 group">
+            <img src={logo} alt="Afro-fete Logo" className="h-12 w-auto transition-transform duration-200 group-hover:scale-105" />
           </Link>
 
           {/* Desktop Navigation - Center */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-10">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-gray-700 hover:text-[#FF6B6B] transition-colors duration-200 font-medium"
+                className="text-gray-700 hover:text-[#FF6B6B] transition-all duration-200 font-medium text-sm relative group"
               >
                 {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#FF6B6B] transition-all duration-200 group-hover:w-full"></span>
               </Link>
             ))}
           </div>
@@ -96,12 +97,12 @@ const Navbar = () => {
             ) : (
               <>
                 <Link to="/signin">
-                  <button className="px-6 py-2 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-lg font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200">
+                  <button className="px-6 py-2.5 text-gray-700 font-medium hover:text-[#FF6B6B] transition-all duration-200 text-sm">
                     Log In
                   </button>
                 </Link>
                 <Link to="/signup">
-                  <button className="px-6 py-2 bg-[#FF6B6B] text-white rounded-lg font-medium hover:bg-[#ff5252] transition-colors duration-200">
+                  <button className="px-6 py-2.5 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-200 text-sm">
                     Sign Up
                   </button>
                 </Link>
@@ -153,7 +154,7 @@ const Navbar = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-900 truncate">
-                        {user.displayName || user.email}
+                        {user.fullName || user.email}
                       </p>
                     </div>
                   </div>

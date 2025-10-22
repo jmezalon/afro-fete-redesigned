@@ -194,39 +194,43 @@ const Landing = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-gray-50 to-white py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute top-20 right-10 w-72 h-72 bg-[#FF6B6B]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-[#FF8E8E]/5 rounded-full blur-3xl"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Hero Text */}
-            <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-gray-900 leading-tight">
+            <div className="space-y-8">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
                 Making memories is only a{' '}
-                <span className="text-[#FF6B6B] italic font-script">
+                <span className="text-[#FF6B6B] italic">
                   #hashtag
                 </span>{' '}
                 away!
               </h1>
               <button
                 onClick={scrollToEvents}
-                className="bg-[#FF6B6B] hover:bg-[#ff5252] text-white px-8 py-3 rounded-full font-medium transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] hover:from-[#ff5252] hover:to-[#FF6B6B] text-white px-10 py-4 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Learn More
+                Explore Events
               </button>
             </div>
 
             {/* Decorative Image Placeholders */}
             <div className="relative h-80 lg:h-96 hidden lg:block">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gray-300 rounded-lg shadow-xl transform rotate-6"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-gray-400 rounded-lg shadow-xl transform -rotate-3"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#FF6B6B]/20 to-[#FF8E8E]/20 rounded-2xl shadow-xl transform rotate-6 backdrop-blur-sm"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-br from-[#FF8E8E]/20 to-[#FFB4B4]/20 rounded-2xl shadow-xl transform -rotate-3 backdrop-blur-sm"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Choose Your Vibe Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-serif text-center text-gray-900 mb-12">
+          <h2 className="text-4xl sm:text-5xl font-bold text-center text-gray-900 mb-16">
             Choose Your Vibe!
           </h2>
 
@@ -243,24 +247,24 @@ const Landing = () => {
       </section>
 
       {/* Divider */}
-      <div className="max-w-md mx-auto w-full">
-        <div className="h-1 bg-[#E57373]"></div>
+      <div className="max-w-2xl mx-auto w-full px-4">
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
       </div>
 
       {/* Event Browsing Section */}
-      <section ref={eventsRef} className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section ref={eventsRef} className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Time Filter Tabs */}
-          <div className="flex justify-center mb-12 overflow-x-auto">
-            <div className="inline-flex gap-8 border-b border-gray-200 pb-2">
+          <div className="flex justify-center overflow-x-auto relative z-10">
+            <div className="inline-flex gap-6 bg-white rounded-full p-2 mb-20" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
               {timeFilters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => handleTimeFilterChange(filter)}
-                  className={`text-sm sm:text-base font-medium whitespace-nowrap pb-2 transition-colors duration-200 ${
+                  className={`px-6 py-2.5 text-sm sm:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
                     activeTimeFilter === filter
-                      ? 'text-[#FF6B6B] border-b-2 border-[#FF6B6B]'
-                      : 'text-gray-600 hover:text-[#FF6B6B]'
+                      ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-md'
+                      : 'text-gray-600 hover:text-[#FF6B6B] hover:bg-gray-50'
                   }`}
                 >
                   {filter}
@@ -271,15 +275,15 @@ const Landing = () => {
 
           {/* Active Filters Display */}
           {(selectedCategory || selectedHashtag) && (
-            <div className="mb-6 flex items-center gap-2 justify-center">
-              <span className="text-sm text-gray-600">Filtering by:</span>
+            <div className="mb-8 flex flex-wrap items-center gap-3 justify-center bg-white rounded-full px-6 py-3 shadow-md w-fit mx-auto">
+              <span className="text-sm font-medium text-gray-600">Filtering by:</span>
               {selectedCategory && (
-                <span className="bg-[#FF6B6B] text-white px-3 py-1 rounded-full text-sm">
+                <span className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white px-4 py-1.5 rounded-full text-sm font-medium">
                   {selectedCategory}
                 </span>
               )}
               {selectedHashtag && (
-                <span className="bg-[#FF6B6B] text-white px-3 py-1 rounded-full text-sm">
+                <span className="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white px-4 py-1.5 rounded-full text-sm font-medium">
                   {selectedHashtag}
                 </span>
               )}
@@ -288,9 +292,9 @@ const Landing = () => {
                   setSelectedCategory(null);
                   setSelectedHashtag(null);
                 }}
-                className="text-sm text-[#FF6B6B] hover:text-[#ff5252] underline ml-2"
+                className="text-sm text-[#FF6B6B] hover:text-[#ff5252] font-semibold ml-2"
               >
-                Clear filters
+                Clear
               </button>
             </div>
           )}
@@ -318,44 +322,46 @@ const Landing = () => {
 
               {/* Show More Button */}
               {eventsToShow < events.length && (
-                <div className="mt-12 text-center">
+                <div className="mt-16 text-center">
                   <button
                     onClick={handleShowMore}
                     disabled={loadingMore}
-                    className="px-8 py-3 border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-full font-medium hover:bg-[#FF6B6B] hover:text-white transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-10 py-4 bg-white border-2 border-[#FF6B6B] text-[#FF6B6B] rounded-full font-semibold hover:bg-gradient-to-r hover:from-[#FF6B6B] hover:to-[#FF8E8E] hover:text-white hover:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg transform hover:scale-105"
                   >
-                    {loadingMore ? 'Loading...' : 'SHOW MORE'}
+                    {loadingMore ? 'Loading...' : 'Show More Events'}
                   </button>
                 </div>
               )}
             </>
           ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No events found for the selected filters.</p>
-              <button
-                onClick={() => {
-                  setSelectedCategory(null);
-                  setSelectedHashtag(null);
-                  setActiveTimeFilter('TODAY');
-                }}
-                className="mt-4 text-[#FF6B6B] hover:text-[#ff5252] underline"
-              >
-                Clear all filters
-              </button>
+            <div className="text-center py-16">
+              <div className="bg-white rounded-2xl shadow-lg p-12 max-w-md mx-auto">
+                <p className="text-gray-600 text-lg mb-6">No events found for the selected filters.</p>
+                <button
+                  onClick={() => {
+                    setSelectedCategory(null);
+                    setSelectedHashtag(null);
+                    setActiveTimeFilter('TODAY');
+                  }}
+                  className="px-8 py-3 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white rounded-full font-semibold hover:from-[#ff5252] hover:to-[#FF6B6B] transition-all duration-200 shadow-md hover:shadow-lg"
+                >
+                  Clear all filters
+                </button>
+              </div>
             </div>
           )}
         </div>
       </section>
 
       {/* Divider */}
-      <div className="max-w-md mx-auto w-full">
-        <div className="h-1 bg-[#E57373]"></div>
+      <div className="max-w-2xl mx-auto w-full px-4">
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
       </div>
 
       {/* Trending Hashtags Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-serif text-gray-900 mb-8">
+          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-12">
             Trending Hashtags
           </h2>
 
@@ -364,7 +370,7 @@ const Landing = () => {
               <button
                 key={hashtag.id}
                 onClick={() => handleHashtagClick(hashtag.name)}
-                className="text-[#FF6B6B] hover:text-[#ff5252] text-lg sm:text-xl font-medium transition-colors duration-200 hover:underline"
+                className="bg-white hover:bg-gradient-to-r hover:from-[#FF6B6B] hover:to-[#FF8E8E] text-[#FF6B6B] hover:text-white px-6 py-3 rounded-full text-base sm:text-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 border-2 border-[#FF6B6B] hover:border-transparent"
               >
                 #{hashtag.name}
               </button>

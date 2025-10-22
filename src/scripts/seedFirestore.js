@@ -9,7 +9,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, doc, setDoc, writeBatch } from 'firebase/firestore';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { users, events, photos, hashtags } from '../data/seedData.js';
 
 // Initialize Firebase (same config as in firebase.js)
@@ -32,8 +32,9 @@ const auth = getAuth(app);
  * @param {string} collectionName - Name of the Firestore collection
  * @param {Array} dataArray - Array of documents to upload
  * @param {number} batchSize - Number of documents per batch (max 500)
+ * @param {Object} uidMapping - Mapping of custom userId to Firebase UID
  */
-async function uploadInBatches(collectionName, dataArray, batchSize = 500) {
+async function uploadInBatches(collectionName, dataArray, batchSize = 500, uidMapping = {}) {
   console.log(`\n📤 Uploading ${dataArray.length} documents to '${collectionName}' collection...`);
 
   for (let i = 0; i < dataArray.length; i += batchSize) {
@@ -41,11 +42,33 @@ async function uploadInBatches(collectionName, dataArray, batchSize = 500) {
     const batchData = dataArray.slice(i, i + batchSize);
 
     batchData.forEach((item) => {
-      const docId = item.userId || item.eventId || item.photoId || item.hashtagId;
+      // For users collection, use Firebase UID; for others, use custom IDs
+      let docId;
+      if (collectionName === 'users' && item.userId && uidMapping[item.userId]) {
+        docId = uidMapping[item.userId]; // Use Firebase UID for users
+      } else {
+        docId = item.userId || item.eventId || item.photoId || item.hashtagId;
+      }
+
       const docRef = doc(db, collectionName, docId);
 
       // Remove the ID field from the document data (it's already in the doc path)
       const { userId, eventId, photoId, hashtagId, ...documentData } = item;
+
+      // For users, add uid field to document
+      if (collectionName === 'users' && userId && uidMapping[userId]) {
+        documentData.uid = uidMapping[userId];
+      }
+
+      // For events, update createdBy field to use Firebase UID
+      if (collectionName === 'events' && documentData.createdBy && uidMapping[documentData.createdBy]) {
+        documentData.createdBy = uidMapping[documentData.createdBy];
+      }
+
+      // For photos, update postedBy field to use Firebase UID
+      if (collectionName === 'photos' && documentData.postedBy && uidMapping[documentData.postedBy]) {
+        documentData.postedBy = uidMapping[documentData.postedBy];
+      }
 
       batch.set(docRef, documentData);
     });
@@ -58,27 +81,47 @@ async function uploadInBatches(collectionName, dataArray, batchSize = 500) {
 }
 
 /**
- * Create authentication accounts for users
+ * Create authentication accounts for users and return mapping
  */
 async function createAuthAccounts() {
   console.log('\n🔐 Creating authentication accounts for users...\n');
 
+  const uidMapping = {}; // Map custom userId to Firebase UID
+  const password = 'TestPassword123!'; // In production, use secure passwords
+
   for (const user of users) {
     try {
-      // Create auth account with email and a default password
-      const password = 'TestPassword123!'; // In production, use secure passwords
-      await createUserWithEmailAndPassword(auth, user.email, password);
+      // Try to create new auth account
+      const userCredential = await createUserWithEmailAndPassword(auth, user.email, password);
+      uidMapping[user.userId] = userCredential.user.uid;
       console.log(`   ✅ Created auth account for ${user.email}`);
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        console.log(`   ⚠️  Auth account already exists for ${user.email}`);
+        // Account exists, sign in to get UID
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, user.email, password);
+          uidMapping[user.userId] = userCredential.user.uid;
+          console.log(`   ♻️  Using existing auth account for ${user.email}`);
+          // Sign out to avoid conflicts
+          await signOut(auth);
+        } catch (signInError) {
+          console.error(`   ❌ Error signing in to existing account ${user.email}:`, signInError.message);
+        }
       } else {
         console.error(`   ❌ Error creating auth for ${user.email}:`, error.message);
       }
     }
   }
 
+  // Sign out after all accounts are processed
+  try {
+    await signOut(auth);
+  } catch (error) {
+    // Ignore sign out errors
+  }
+
   console.log('\n✨ Finished creating authentication accounts!\n');
+  return uidMapping;
 }
 
 /**
@@ -89,25 +132,25 @@ async function seedDatabase() {
   console.log('═'.repeat(60));
 
   try {
-    // Step 1: Create auth accounts for users
-    await createAuthAccounts();
+    // Step 1: Create auth accounts for users and get UID mapping
+    const uidMapping = await createAuthAccounts();
 
-    // Step 2: Upload users
-    await uploadInBatches('users', users);
+    // Step 2: Upload users with Firebase UIDs
+    await uploadInBatches('users', users, 500, uidMapping);
 
-    // Step 3: Upload events
-    await uploadInBatches('events', events);
+    // Step 3: Upload events (createdBy field will be updated to Firebase UIDs)
+    await uploadInBatches('events', events, 500, uidMapping);
 
-    // Step 4: Upload photos
-    await uploadInBatches('photos', photos);
+    // Step 4: Upload photos (uploadedBy field will be updated to Firebase UIDs)
+    await uploadInBatches('photos', photos, 500, uidMapping);
 
     // Step 5: Upload hashtags
-    await uploadInBatches('hashtags', hashtags);
+    await uploadInBatches('hashtags', hashtags, 500, uidMapping);
 
     console.log('═'.repeat(60));
     console.log('\n🎉 Database seeding completed successfully!');
     console.log('\n📊 Summary:');
-    console.log(`   • ${users.length} users created`);
+    console.log(`   • ${users.length} users created with Firebase Auth UIDs`);
     console.log(`   • ${events.length} events uploaded`);
     console.log(`   • ${photos.length} photos uploaded`);
     console.log(`   • ${hashtags.length} hashtags uploaded`);

@@ -3,6 +3,11 @@
 @import "tailwindcss";
 
 @layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     @apply bg-white text-gray-800;
     font-family: 'Inter', system-ui, sans-serif;
@@ -10,5 +15,22 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  #root {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@layer utilities {
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
   }
 }
