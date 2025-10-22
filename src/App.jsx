@@ -8,6 +8,8 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import Profile from './pages/Profile';
 import FirebaseTest from './pages/FirebaseTest';
+import CategoryView from './pages/CategoryView';
+import EventDetail from './pages/EventDetail';
 
 function App() {
   return (
@@ -34,6 +36,10 @@ function App() {
           />
           <Route path="/login" element={<Navigate to="/signin" replace />} />
           <Route path="/firebase-test" element={<FirebaseTest />} />
+
+          {/* Category and Event Routes */}
+          <Route path="/category/:categoryName" element={<CategoryView />} />
+          <Route path="/events/:eventId" element={<EventDetail />} />
 
           {/* Protected Routes */}
           <Route

@@ -117,11 +117,10 @@ const Landing = () => {
     setDisplayedEvents(events.slice(0, eventsToShow));
   }, [events, eventsToShow]);
 
-  // Handle category click
+  // Handle category click - navigate to category page
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category.name.toLowerCase());
-    setSelectedHashtag(null);
-    scrollToEvents();
+    const categorySlug = category.name.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/category/${categorySlug}`);
   };
 
   // Handle hashtag click
@@ -186,7 +185,7 @@ const Landing = () => {
 
   // Check if event is favorited
   const isEventFavorited = (eventId) => {
-    return user?.favorites?.includes(eventId) || false;
+    return user?.favoriteEvents?.includes(eventId) || false;
   };
 
   return (
@@ -359,13 +358,13 @@ const Landing = () => {
       </div>
 
       {/* Trending Hashtags Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
+      <section className="pt-20 pb-0 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-12">
             Trending Hashtags
           </h2>
 
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4 pb-20">
             {trendingHashtags.map((hashtag) => (
               <button
                 key={hashtag.id}

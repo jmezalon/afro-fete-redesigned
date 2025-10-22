@@ -1,5 +1,5 @@
 // Event category constants and configuration
-// Images are located in src/assets/event-category/
+// Using Unsplash images (same as Landing page)
 
 export const EVENT_CATEGORIES = [
   {
@@ -7,7 +7,7 @@ export const EVENT_CATEGORIES = [
     name: 'brunch',
     hashtag: '#brunch',
     displayName: 'Brunch',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.03 AM.png',
+    image: 'https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=500',
     description: 'Brunch events and experiences'
   },
   {
@@ -15,7 +15,7 @@ export const EVENT_CATEGORIES = [
     name: 'festivals',
     hashtag: '#festivals',
     displayName: 'Festivals',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.14 AM.png',
+    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500',
     description: 'Music festivals and cultural celebrations'
   },
   {
@@ -23,7 +23,7 @@ export const EVENT_CATEGORIES = [
     name: 'nightlife',
     hashtag: '#nightlife',
     displayName: 'Nightlife',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.34 AM.png',
+    image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500',
     description: 'Clubs, parties, and nightlife events'
   },
   {
@@ -31,7 +31,7 @@ export const EVENT_CATEGORIES = [
     name: 'afterwork',
     hashtag: '#afterwork',
     displayName: 'After Work',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.45 AM.png',
+    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500',
     description: 'After-work social events and happy hours'
   },
   {
@@ -39,7 +39,7 @@ export const EVENT_CATEGORIES = [
     name: 'arts',
     hashtag: '#arts',
     displayName: 'Arts',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.56 AM.png',
+    image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=500',
     description: 'Art exhibitions, galleries, and cultural events'
   },
   {
@@ -47,7 +47,7 @@ export const EVENT_CATEGORIES = [
     name: 'concerts',
     hashtag: '#concerts',
     displayName: 'Concerts',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.18.57 AM.png',
+    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=500',
     description: 'Live music and concert performances'
   },
   {
@@ -55,7 +55,7 @@ export const EVENT_CATEGORIES = [
     name: 'dayparty',
     hashtag: '#dayparty',
     displayName: 'Day Party',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.19.16 AM.png',
+    image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500',
     description: 'Daytime parties and social gatherings'
   },
   {
@@ -63,7 +63,7 @@ export const EVENT_CATEGORIES = [
     name: 'boatrides',
     hashtag: '#boatrides',
     displayName: 'Boat Rides',
-    image: '/src/assets/event-category/Screenshot 2025-10-21 at 11.19.27 AM.png',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500',
     description: 'Boat parties and water-based events'
   }
 ];

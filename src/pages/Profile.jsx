@@ -44,7 +44,7 @@ const Profile = () => {
       });
 
       // Fetch favorite events
-      if (user.favorites && user.favorites.length > 0) {
+      if (user.favoriteEvents && user.favoriteEvents.length > 0) {
         fetchFavoriteEvents();
       }
 
@@ -62,7 +62,7 @@ const Profile = () => {
     try {
       const result = await getEvents({ limit: 50 });
       const events = result.events || result;
-      const favorites = events.filter(event => user?.favorites?.includes(event.id));
+      const favorites = events.filter(event => user?.favoriteEvents?.includes(event.id));
       setFavoriteEvents(favorites);
     } catch (error) {
       console.error('Error fetching favorite events:', error);
@@ -446,7 +446,7 @@ const Profile = () => {
                     <div key={event.id} className="relative">
                       <EventCard
                         event={event}
-                        isFavorited={user?.favorites?.includes(event.id)}
+                        isFavorited={user?.favoriteEvents?.includes(event.id)}
                         onFavoriteToggle={handleFavoriteToggle}
                       />
                       {/* Action Buttons Overlay */}
@@ -491,9 +491,9 @@ const Profile = () => {
 
       {/* Favorites Section */}
       {favoriteEvents.length > 0 && (
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E]">
+        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-white text-center mb-12">Favorites</h2>
+            <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">Favorites</h2>
 
             <div className="relative">
               {/* Navigation Buttons */}
