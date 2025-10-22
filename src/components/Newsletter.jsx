@@ -83,7 +83,7 @@ const Newsletter = () => {
                   }
                 }}
                 placeholder="Enter your email address"
-                className="w-full px-6 py-3 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#FF6B6B] transition-all disabled:opacity-50"
+                className="w-full px-6 py-3 bg-white rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#FF6B6B] transition-all disabled:opacity-50"
                 disabled={status === 'loading'}
                 aria-label="Email address"
               />
