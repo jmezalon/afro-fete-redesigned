@@ -9,6 +9,7 @@ import {
   where,
   orderBy,
   limit,
+  startAfter,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { uploadImage, deleteImage } from './storageService';
@@ -65,16 +66,21 @@ export const uploadPhoto = async (photoData, userId, userName = 'Anonymous') => 
  * Get all photos from all users
  * @param {Object} options - Query options
  * @param {number} options.limit - Maximum number of photos to return
- * @returns {Promise<Array>} Array of photo objects
+ * @param {Object} options.lastDoc - Last document from previous query for pagination
+ * @returns {Promise<Object>} Object with photos array and lastDoc for pagination
  * @throws {Error} If fetching photos fails
  */
 export const getAllPhotos = async (options = {}) => {
   try {
-    const { limit: maxResults = 100 } = options;
+    const { limit: maxResults = 20, lastDoc = null } = options;
 
     const constraints = [
       orderBy('createdAt', 'desc'),
     ];
+
+    if (lastDoc) {
+      constraints.push(startAfter(lastDoc));
+    }
 
     if (maxResults) {
       constraints.push(limit(maxResults));
@@ -91,7 +97,13 @@ export const getAllPhotos = async (options = {}) => {
       });
     });
 
-    return photos;
+    const newLastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return {
+      photos,
+      lastDoc: newLastDoc,
+      hasMore: photos.length === maxResults,
+    };
   } catch (error) {
     console.error('Error getting all photos:', error);
     throw new Error(error.message || 'Failed to get all photos');
@@ -200,17 +212,25 @@ export const getEventPhotos = async (eventId, options = {}) => {
  * @param {string} hashtag - Hashtag to search for
  * @param {Object} options - Query options
  * @param {number} options.limit - Maximum number of photos to return
- * @returns {Promise<Array>} Array of photo objects
+ * @param {Object} options.lastDoc - Last document from previous query for pagination
+ * @returns {Promise<Object>} Object with photos array and lastDoc for pagination
  * @throws {Error} If fetching photos fails
  */
 export const getPhotosByHashtag = async (hashtag, options = {}) => {
   try {
-    const { limit: maxResults = 50 } = options;
+    const { limit: maxResults = 20, lastDoc = null } = options;
+
+    // Normalize hashtag to lowercase for case-insensitive search
+    const normalizedHashtag = hashtag.toLowerCase();
 
     const constraints = [
-      where('hashtags', 'array-contains', hashtag),
+      where('hashtags', 'array-contains', normalizedHashtag),
       orderBy('createdAt', 'desc'),
     ];
+
+    if (lastDoc) {
+      constraints.push(startAfter(lastDoc));
+    }
 
     if (maxResults) {
       constraints.push(limit(maxResults));
@@ -227,7 +247,13 @@ export const getPhotosByHashtag = async (hashtag, options = {}) => {
       });
     });
 
-    return photos;
+    const newLastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return {
+      photos,
+      lastDoc: newLastDoc,
+      hasMore: photos.length === maxResults,
+    };
   } catch (error) {
     console.error('Error getting photos by hashtag:', error);
     throw new Error(error.message || 'Failed to get photos by hashtag');

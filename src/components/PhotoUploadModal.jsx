@@ -66,10 +66,10 @@ const PhotoUploadModal = ({ isOpen, onClose, onUploadSuccess }) => {
     setUploading(true);
 
     try {
-      // Parse hashtags
+      // Parse hashtags (normalize to lowercase for consistent searching)
       const hashtagArray = formData.hashtags
         .split(',')
-        .map(tag => tag.trim().replace('#', ''))
+        .map(tag => tag.trim().replace('#', '').toLowerCase())
         .filter(tag => tag.length > 0);
 
       const photoData = {

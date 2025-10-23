@@ -255,13 +255,14 @@ const Landing = () => {
       <section ref={eventsRef} className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto">
           {/* Time Filter Tabs */}
-          <div className="flex justify-center overflow-x-auto relative z-10 -mx-4 px-4">
-            <div className="inline-flex gap-2 sm:gap-4 md:gap-6 bg-white rounded-full p-2 mb-20" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
+          <div className="flex justify-center relative z-10">
+            <div className="inline-flex gap-1 sm:gap-4 md:gap-6 bg-white rounded-full p-1.5 sm:p-2 mb-20 max-w-full" style={{ boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)' }}>
               {timeFilters.map((filter) => (
                 <button
                   key={filter}
                   onClick={() => handleTimeFilterChange(filter)}
-                  className={`px-4 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
+                  style={{ fontSize: '0.65em' }}
+                  className={`px-2.5 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
                     activeTimeFilter === filter
                       ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-md'
                       : 'text-gray-600 hover:text-[#FF6B6B] hover:bg-gray-50'

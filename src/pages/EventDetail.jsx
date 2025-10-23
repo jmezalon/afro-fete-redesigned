@@ -204,7 +204,7 @@ const EventDetail = () => {
                 <div
                   key={category.id}
                   onClick={() => handleCategoryClick(category)}
-                  className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl ${
+                  className={`relative aspect-[3/1] lg:aspect-square rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl ${
                     isActive ? 'ring-4 ring-[#FF6B6B] ring-offset-2' : ''
                   }`}
                 >

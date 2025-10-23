@@ -40,7 +40,7 @@ const CategoryCard = ({ category, onClick }) => {
     <div
       onClick={handleCardClick}
       onKeyDown={handleKeyDown}
-      className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group focus:outline-none focus:ring-4 focus:ring-[#FF6B6B] focus:ring-offset-2 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl"
+      className="relative aspect-[3/1] lg:aspect-square rounded-lg overflow-hidden cursor-pointer group focus:outline-none focus:ring-4 focus:ring-[#FF6B6B] focus:ring-offset-2 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl"
       role="button"
       tabIndex={0}
       aria-label={`View ${category.name} events - ${category.hashtag}`}

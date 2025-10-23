@@ -266,7 +266,7 @@ const CategoryView = () => {
                 <div
                   key={category.id}
                   onClick={() => handleCategoryClick(category)}
-                  className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl ${
+                  className={`relative aspect-[3/1] lg:aspect-square rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl ${
                     isActive ? 'ring-4 ring-[#FF6B6B] ring-offset-2' : ''
                   }`}
                 >
@@ -317,13 +317,14 @@ const CategoryView = () => {
           {/* Time Filter Tabs */}
           <section className="py-8 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-200">
             <div className="max-w-6xl mx-auto">
-              <div className="flex justify-center overflow-x-auto -mx-4 px-4">
-                <div className="inline-flex gap-2 sm:gap-4 bg-gray-50 rounded-full p-2">
+              <div className="flex justify-center">
+                <div className="inline-flex gap-1 sm:gap-4 bg-gray-50 rounded-full p-1.5 sm:p-2 max-w-full">
                   {timeFilters.map((filter) => (
                     <button
                       key={filter}
                       onClick={() => handleTimeFilterChange(filter)}
-                      className={`px-4 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
+                      style={{ fontSize: '0.65em' }}
+                      className={`px-2.5 sm:px-6 py-2.5 text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap rounded-full transition-all duration-200 ${
                         activeTimeFilter === filter
                           ? 'bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white shadow-md'
                           : 'text-gray-600 hover:text-[#FF6B6B] hover:bg-white'
