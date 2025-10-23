@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 import { Search, Calendar, Users, Heart, Plus, Share2 } from 'lucide-react';
 
 const HowItWorks = () => {
@@ -233,18 +234,18 @@ const HowItWorks = () => {
               Join thousands of people discovering and celebrating African culture through amazing events.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/signup"
+              <Link
+                to="/signup"
                 className="px-8 py-3 bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200"
               >
                 Create Account
-              </a>
-              <a
-                href="/"
+              </Link>
+              <Link
+                to="/"
                 className="px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all duration-200"
               >
                 Browse Events
-              </a>
+              </Link>
             </div>
           </div>
         </section>
