@@ -52,7 +52,7 @@ const ForgotPassword = () => {
 
     try {
       await sendPasswordReset(email);
-      setSuccessMessage('Password reset email sent! Please check your inbox.');
+      setSuccessMessage('Password reset email sent! Please check your inbox. Remember to check your spam/junk folder also!');
       setEmail(''); // Clear the email field on success
     } catch (error) {
       console.error('Password reset error:', error);
