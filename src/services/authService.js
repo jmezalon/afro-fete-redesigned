@@ -4,6 +4,7 @@ import {
   signOut,
   updateProfile,
   updatePassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../config/firebase';
@@ -185,5 +186,20 @@ export const getCurrentUserData = async (userId) => {
   } catch (error) {
     console.error('Error getting user data:', error);
     throw new Error(error.message || 'Failed to get user data');
+  }
+};
+
+/**
+ * Send password reset email to user
+ * @param {string} email - User's email address
+ * @returns {Promise<void>}
+ * @throws {Error} If sending reset email fails
+ */
+export const sendPasswordReset = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    console.error('Error sending password reset email:', error);
+    throw error;
   }
 };

@@ -6,6 +6,7 @@ import './App.css';
 import Landing from './pages/Landing';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
+import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import FirebaseTest from './pages/FirebaseTest';
 import CategoryView from './pages/CategoryView';
@@ -38,6 +39,14 @@ function App() {
             element={
               <PublicRoute>
                 <SignIn />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
               </PublicRoute>
             }
           />
