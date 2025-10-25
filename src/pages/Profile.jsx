@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
 import EventCard from '../components/EventCard';
+import ProfilePhotoUploadModal from '../components/ProfilePhotoUploadModal';
 import { getEvents, deleteEvent } from '../services/eventService';
 import { getUserPhotos, deletePhoto } from '../services/photoService';
 
@@ -35,6 +36,7 @@ const Profile = () => {
   const [selectedPhotos, setSelectedPhotos] = useState([]);
   const [favoritesPage, setFavoritesPage] = useState(0);
   const [myEventsPage, setMyEventsPage] = useState(0);
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
 
   const favoritesPerPage = 3;
 
@@ -282,10 +284,23 @@ const Profile = () => {
             {/* Left: Profile Picture */}
             <div className="flex flex-col items-center">
               <div className="relative">
-                <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-5xl sm:text-6xl font-bold shadow-2xl">
-                  {getUserInitials()}
-                </div>
-                <button className="absolute bottom-2 right-2 w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border-4 border-gray-50">
+                {user?.profilePhoto ? (
+                  <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full overflow-hidden shadow-2xl border-4 border-white">
+                    <img
+                      src={user.profilePhoto}
+                      alt={user.fullName || 'Profile'}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-5xl sm:text-6xl font-bold shadow-2xl">
+                    {getUserInitials()}
+                  </div>
+                )}
+                <button
+                  onClick={() => setIsPhotoModalOpen(true)}
+                  className="absolute bottom-2 right-2 w-12 h-12 sm:w-14 sm:h-14 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border-4 border-gray-50"
+                >
                   <Camera className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF6B6B]" />
                 </button>
               </div>
@@ -707,6 +722,17 @@ const Profile = () => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Profile Photo Upload Modal */}
+      <ProfilePhotoUploadModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
+        onPhotoUploaded={(photoUrl) => {
+          // AuthContext uses real-time Firestore listeners (onSnapshot)
+          // so the user data will automatically update when Firestore changes
+          // No need to reload - just close the modal
+        }}
+      />
     </div>
   );
 };
