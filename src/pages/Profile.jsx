@@ -601,20 +601,20 @@ const Profile = () => {
             </div>
 
             <div className="relative">
-              {/* Navigation Buttons */}
+              {/* Desktop Navigation Buttons - Hidden on Mobile */}
               {totalFavoritesPages > 1 && (
                 <>
                   <button
                     onClick={() => setFavoritesPage(prev => Math.max(0, prev - 1))}
                     disabled={favoritesPage === 0}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-12 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                    className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 w-12 h-12 bg-white rounded-full items-center justify-center shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
                   >
                     <ChevronLeft className="w-6 h-6 text-[#FF6B6B]" />
                   </button>
                   <button
                     onClick={() => setFavoritesPage(prev => Math.min(totalFavoritesPages - 1, prev + 1))}
                     disabled={favoritesPage === totalFavoritesPages - 1}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-12 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
+                    className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 w-12 h-12 bg-white rounded-full items-center justify-center shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed z-10"
                   >
                     <ChevronRight className="w-6 h-6 text-[#FF6B6B]" />
                   </button>
@@ -633,6 +633,28 @@ const Profile = () => {
                   />
                 ))}
               </div>
+
+              {/* Mobile Navigation Buttons - Below Grid */}
+              {totalFavoritesPages > 1 && (
+                <div className="flex lg:hidden items-center justify-center gap-4 mt-8">
+                  <button
+                    onClick={() => setFavoritesPage(prev => Math.max(0, prev - 1))}
+                    disabled={favoritesPage === 0}
+                    className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-[#FF6B6B] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-[#FF6B6B]" />
+                    <span className="font-medium text-gray-700">Previous</span>
+                  </button>
+                  <button
+                    onClick={() => setFavoritesPage(prev => Math.min(totalFavoritesPages - 1, prev + 1))}
+                    disabled={favoritesPage === totalFavoritesPages - 1}
+                    className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 rounded-full shadow-md hover:shadow-lg hover:border-[#FF6B6B] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-200"
+                  >
+                    <span className="font-medium text-gray-700">Next</span>
+                    <ChevronRight className="w-5 h-5 text-[#FF6B6B]" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </section>
