@@ -16,6 +16,8 @@ import CreateEvent from './pages/CreateEvent';
 import About from './pages/About';
 import HowItWorks from './pages/HowItWorks';
 import HashtagBrowse from './pages/HashtagBrowse';
+import PromoterProfile from './pages/PromoterProfile';
+import PromotersList from './pages/PromotersList';
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
           {/* Category and Event Routes */}
           <Route path="/category/:categoryName" element={<CategoryView />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
+          <Route path="/promoters" element={<PromotersList />} />
+          <Route path="/promoter/:promoterId" element={<PromoterProfile />} />
           <Route path="/photos" element={<PhotoGallery />} />
           <Route path="/hashtags" element={<HashtagBrowse />} />
 

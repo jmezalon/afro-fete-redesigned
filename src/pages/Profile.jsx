@@ -18,6 +18,9 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     username: '',
     fullName: '',
+    bio: '',
+    instagramHandle: '',
+    twitterHandle: '',
     password: '',
     confirmPassword: '',
   });
@@ -40,6 +43,9 @@ const Profile = () => {
       setFormData({
         username: user.username || '',
         fullName: user.fullName || '',
+        bio: user.bio || '',
+        instagramHandle: user.instagramHandle || '',
+        twitterHandle: user.twitterHandle || '',
         password: '',
         confirmPassword: '',
       });
@@ -74,7 +80,11 @@ const Profile = () => {
     try {
       const result = await getEvents({ limit: 50 });
       const events = result.events || result;
-      const myEventsList = events.filter(event => event.promoterId === user?.uid);
+      // Handle both 'promoterId' and 'createdBy' field names for backwards compatibility
+      const myEventsList = events.filter(event => {
+        const eventPromoterId = event.promoterId || event.createdBy;
+        return eventPromoterId === user?.uid;
+      });
       setMyEvents(myEventsList);
     } catch (error) {
       console.error('Error fetching my events:', error);
@@ -124,6 +134,9 @@ const Profile = () => {
       const updates = {
         username: formData.username,
         fullName: formData.fullName,
+        bio: formData.bio,
+        instagramHandle: formData.instagramHandle,
+        twitterHandle: formData.twitterHandle,
       };
 
       // Only include password if it's actually provided
@@ -327,6 +340,54 @@ const Profile = () => {
                   />
                 </div>
 
+                {/* Bio */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Bio {user?.userType === 'promoter' && <span className="text-red-500">*</span>}
+                  </label>
+                  <textarea
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    rows="3"
+                    placeholder="Tell us about yourself..."
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent disabled:opacity-60 transition-all resize-none"
+                  />
+                </div>
+
+                {/* Instagram Handle */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Instagram Handle
+                  </label>
+                  <input
+                    type="text"
+                    name="instagramHandle"
+                    value={formData.instagramHandle}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    placeholder="@username"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent disabled:opacity-60 transition-all"
+                  />
+                </div>
+
+                {/* Twitter Handle */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Twitter/X Handle
+                  </label>
+                  <input
+                    type="text"
+                    name="twitterHandle"
+                    value={formData.twitterHandle}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    placeholder="@username"
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:border-transparent disabled:opacity-60 transition-all"
+                  />
+                </div>
+
                 {isEditing && (
                   <>
                     {/* Password */}
@@ -401,6 +462,9 @@ const Profile = () => {
                           setFormData({
                             username: user?.username || '',
                             fullName: user?.fullName || '',
+                            bio: user?.bio || '',
+                            instagramHandle: user?.instagramHandle || '',
+                            twitterHandle: user?.twitterHandle || '',
                             password: '',
                             confirmPassword: '',
                           });

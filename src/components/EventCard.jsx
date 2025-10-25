@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Heart } from 'lucide-react';
+import { Heart, User } from 'lucide-react';
 import { format } from 'date-fns';
 
 /**
@@ -21,19 +21,23 @@ import { format } from 'date-fns';
  * @param {boolean} props.isFavorited - Whether the event is currently favorited
  * @param {Function} [props.onHashtagClick] - Optional callback when hashtag is clicked
  * @param {string} [props.currentUserId] - Current user's ID to check if they are the event creator
+ * @param {string} [props.promoterName] - Optional promoter name to display
  */
 const EventCard = ({
   event,
   onFavoriteToggle,
   isFavorited,
   onHashtagClick,
-  currentUserId
+  currentUserId,
+  promoterName
 }) => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
 
   // Check if current user is the event creator
-  const isOwnEvent = currentUserId && event.promoterId === currentUserId;
+  // Handle both 'promoterId' and 'createdBy' field names for backwards compatibility
+  const eventPromoterId = event.promoterId || event.createdBy;
+  const isOwnEvent = currentUserId && eventPromoterId === currentUserId;
 
   // Parse date if it's a string
   const eventDate = typeof event.date === 'string' ? new Date(event.date) : event.date;
@@ -73,6 +77,13 @@ const EventCard = ({
     } else {
       // Default behavior: navigate to events page with hashtag filter
       navigate(`/events?hashtag=${encodeURIComponent(hashtag)}`);
+    }
+  };
+
+  const handlePromoterClick = (e) => {
+    e.stopPropagation();
+    if (eventPromoterId) {
+      navigate(`/promoter/${eventPromoterId}`);
     }
   };
 
@@ -142,6 +153,20 @@ const EventCard = ({
             <p className="text-xs text-gray-500 mb-2 line-clamp-2">
               {fullAddress}
             </p>
+
+            {/* Promoter Info */}
+            {(promoterName || eventPromoterId) && (
+              <div className="flex items-center gap-1 mb-2">
+                <User className="w-3 h-3 text-gray-400" />
+                <button
+                  onClick={handlePromoterClick}
+                  className="text-xs text-gray-600 hover:text-[#FF6B6B] hover:underline transition-colors"
+                  aria-label="View promoter profile"
+                >
+                  {promoterName || 'View Promoter'}
+                </button>
+              </div>
+            )}
 
             {/* Hashtags */}
             {event.hashtags && event.hashtags.length > 0 && (

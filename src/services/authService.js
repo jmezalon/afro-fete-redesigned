@@ -203,3 +203,31 @@ export const sendPasswordReset = async (email) => {
     throw error;
   }
 };
+
+/**
+ * Get all promoters from Firestore
+ * @returns {Promise<Array>} Array of promoter user objects
+ * @throws {Error} If fetching promoters fails
+ */
+export const getAllPromoters = async () => {
+  try {
+    const { collection, query, where, getDocs } = await import('firebase/firestore');
+
+    const usersRef = collection(db, 'users');
+    const promotersQuery = query(usersRef, where('userType', '==', 'promoter'));
+    const querySnapshot = await getDocs(promotersQuery);
+
+    const promoters = [];
+    querySnapshot.forEach((doc) => {
+      promoters.push({
+        uid: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    return promoters;
+  } catch (error) {
+    console.error('Error fetching promoters:', error);
+    throw new Error(error.message || 'Failed to fetch promoters');
+  }
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { Heart, ExternalLink, Menu, X, MapPin, Calendar, Clock } from 'lucide-react';
+import { Heart, ExternalLink, Menu, X, MapPin, Calendar, Clock, User } from 'lucide-react';
 import { format } from 'date-fns';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -8,6 +8,7 @@ import Newsletter from '../components/Newsletter';
 import HashtagFollowButton from '../components/HashtagFollowButton';
 import { getEventById } from '../services/eventService';
 import { getTrendingHashtags } from '../services/hashtagService';
+import { getCurrentUserData } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
 import { EVENT_CATEGORIES } from '../data/eventCategories';
 
@@ -19,6 +20,7 @@ const EventDetail = () => {
 
   // State
   const [event, setEvent] = useState(null);
+  const [promoter, setPromoter] = useState(null);
   const [trendingHashtags, setTrendingHashtags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,6 +35,19 @@ const EventDetail = () => {
       try {
         const eventData = await getEventById(eventId);
         setEvent(eventData);
+
+        // Fetch promoter data if available
+        // Handle both 'promoterId' and 'createdBy' field names for backwards compatibility
+        const eventPromoterId = eventData.promoterId || eventData.createdBy;
+        if (eventPromoterId) {
+          try {
+            const promoterData = await getCurrentUserData(eventPromoterId);
+            setPromoter(promoterData);
+          } catch (promoterErr) {
+            console.error('Error fetching promoter data:', promoterErr);
+            // Don't fail the whole page if promoter fetch fails
+          }
+        }
       } catch (err) {
         console.error('Error fetching event:', err);
         setError(err.message || 'Event not found');
@@ -92,7 +107,9 @@ const EventDetail = () => {
   };
 
   // Check if current user is the event creator
-  const isOwnEvent = user?.uid && event?.promoterId === user.uid;
+  // Handle both 'promoterId' and 'createdBy' field names for backwards compatibility
+  const eventPromoterId = event?.promoterId || event?.createdBy;
+  const isOwnEvent = user?.uid && eventPromoterId === user.uid;
 
   // Loading state
   if (loading) {
@@ -282,6 +299,20 @@ const EventDetail = () => {
                   <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                     {eventTitle}
                   </h1>
+
+                  {/* Promoter Info */}
+                  {promoter && promoter.userType === 'promoter' && (
+                    <div className="flex items-center gap-2 mb-4">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm text-gray-600">Posted by</span>
+                      <button
+                        onClick={() => navigate(`/promoter/${promoter.uid}`)}
+                        className="text-sm font-semibold text-[#FF6B6B] hover:text-[#ff5252] hover:underline transition-colors"
+                      >
+                        {promoter.fullName || promoter.username}
+                      </button>
+                    </div>
+                  )}
 
                   {/* Venue Name */}
                   <div className="flex items-start gap-2 mb-3">
