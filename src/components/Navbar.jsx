@@ -9,13 +9,18 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const navLinks = [
+  const allNavLinks = [
     { name: 'About Us', path: '/about' },
     { name: 'How It Works', path: '/how-it-works' },
     { name: 'Promoters', path: '/promoters' },
     { name: 'Photo Gallery', path: '/photos' },
     { name: 'Hashtags', path: '/hashtags' },
   ];
+
+  // Filter out "How It Works" when user is logged in
+  const navLinks = user
+    ? allNavLinks.filter(link => link.name !== 'How It Works')
+    : allNavLinks;
 
   const handleSignOut = async () => {
     try {
@@ -66,10 +71,18 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="w-10 h-10 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center hover:bg-[#ff5252] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2"
+                  className="w-10 h-10 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center hover:bg-[#ff5252] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#FF6B6B] focus:ring-offset-2 overflow-hidden"
                   aria-label="User menu"
                 >
-                  {getUserInitials()}
+                  {user.profilePhoto ? (
+                    <img
+                      src={user.profilePhoto}
+                      alt={user.fullName || user.email}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    getUserInitials()
+                  )}
                 </button>
 
                 {/* Dropdown Menu */}
@@ -135,8 +148,16 @@ const Navbar = () => {
             {/* Mobile User Section */}
             {user && (
               <div className="flex items-center justify-center space-x-3 pb-4 border-b border-gray-200">
-                <div className="w-10 h-10 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center">
-                  {getUserInitials()}
+                <div className="w-10 h-10 rounded-full bg-[#FF6B6B] text-white font-semibold flex items-center justify-center overflow-hidden">
+                  {user.profilePhoto ? (
+                    <img
+                      src={user.profilePhoto}
+                      alt={user.fullName || user.email}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    getUserInitials()
+                  )}
                 </div>
                 <p className="text-sm font-medium text-gray-900">
                   {user.fullName || user.email}

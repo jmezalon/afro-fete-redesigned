@@ -175,8 +175,16 @@ const PromotersList = () => {
                     <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12"></div>
 
                     {/* Profile Picture */}
-                    <div className="relative z-10 w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center text-[#FF6B6B] text-3xl font-bold shadow-xl mb-4">
-                      {getPromoterInitials(promoter)}
+                    <div className="relative z-10 w-24 h-24 mx-auto bg-white rounded-full flex items-center justify-center text-[#FF6B6B] text-3xl font-bold shadow-xl mb-4 overflow-hidden">
+                      {promoter.profilePhoto ? (
+                        <img
+                          src={promoter.profilePhoto}
+                          alt={promoter.fullName || promoter.username}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        getPromoterInitials(promoter)
+                      )}
                     </div>
 
                     {/* Promoter Name */}

@@ -151,8 +151,16 @@ const PromoterProfile = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center text-center mb-12">
             {/* Profile Picture */}
-            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-4xl sm:text-5xl font-bold shadow-2xl mb-6">
-              {getPromoterInitials()}
+            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E8E] flex items-center justify-center text-white text-4xl sm:text-5xl font-bold shadow-2xl mb-6 overflow-hidden">
+              {promoter.profilePhoto ? (
+                <img
+                  src={promoter.profilePhoto}
+                  alt={promoter.fullName || promoter.username}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                getPromoterInitials()
+              )}
             </div>
 
             {/* Promoter Name */}
