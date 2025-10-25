@@ -104,8 +104,8 @@ const SignUp = () => {
         formData.fullName,
         formData.userType
       );
-      // Redirect to profile on success
-      navigate('/profile');
+      // Redirect to landing page on success
+      navigate('/');
     } catch (error) {
       console.error('Sign up error:', error);
       setAuthError(error.message || 'Failed to create account. Please try again.');

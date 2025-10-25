@@ -409,7 +409,7 @@ export const ProtectedRoute = ({ children, redirectTo = '/signin' }) => {
  *
  * @param {Object} props
  * @param {React.ReactNode} props.children - Public content (signin/signup pages)
- * @param {string} [props.redirectTo='/profile'] - Path to redirect if authenticated
+ * @param {string} [props.redirectTo='/'] - Path to redirect if authenticated
  * @returns {React.ReactElement} Public content or redirect
  *
  * @example
@@ -417,7 +417,7 @@ export const ProtectedRoute = ({ children, redirectTo = '/signin' }) => {
  *   <SignInPage />
  * </PublicRoute>
  */
-export const PublicRoute = ({ children, redirectTo = '/profile' }) => {
+export const PublicRoute = ({ children, redirectTo = '/' }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
