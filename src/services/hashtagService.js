@@ -102,9 +102,11 @@ export const getTrendingHashtags = async (maxResults = 10) => {
     const hashtags = [];
 
     querySnapshot.forEach((doc) => {
+      const data = doc.data();
       hashtags.push({
         id: doc.id,
-        ...doc.data(),
+        name: data.tag || doc.id, // Add name field for UI compatibility
+        ...data,
       });
     });
 
@@ -133,9 +135,11 @@ export const getRecentHashtags = async (maxResults = 10) => {
     const hashtags = [];
 
     querySnapshot.forEach((doc) => {
+      const data = doc.data();
       hashtags.push({
         id: doc.id,
-        ...doc.data(),
+        name: data.tag || doc.id, // Add name field for UI compatibility
+        ...data,
       });
     });
 
@@ -167,9 +171,11 @@ export const getHashtagByTag = async (hashtag) => {
       return null;
     }
 
+    const data = hashtagDoc.data();
     return {
       id: hashtagDoc.id,
-      ...hashtagDoc.data(),
+      name: data.tag || hashtagDoc.id, // Add name field for UI compatibility
+      ...data,
     };
   } catch (error) {
     console.error('Error getting hashtag:', error);
@@ -209,6 +215,7 @@ export const searchHashtags = async (searchTerm, maxResults = 10) => {
       if (data.tag && data.tag.includes(normalizedSearch)) {
         hashtags.push({
           id: doc.id,
+          name: data.tag || doc.id, // Add name field for UI compatibility
           ...data,
         });
       }
