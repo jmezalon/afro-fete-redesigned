@@ -106,7 +106,8 @@ export const getTrendingHashtags = async (maxResults = 10) => {
       const data = doc.data();
       hashtags.push({
         id: doc.id,
-        name: data.tag || doc.id, // Add name field for UI compatibility
+        name: data.tag || data.name || doc.id, // Add name field for UI compatibility
+        count: data.count || data.usageCount || 0, // Support both count and usageCount
         ...data,
       });
     });
@@ -139,7 +140,8 @@ export const getRecentHashtags = async (maxResults = 10) => {
       const data = doc.data();
       hashtags.push({
         id: doc.id,
-        name: data.tag || doc.id, // Add name field for UI compatibility
+        name: data.tag || data.name || doc.id, // Add name field for UI compatibility
+        count: data.count || data.usageCount || 0, // Support both count and usageCount
         ...data,
       });
     });
@@ -175,7 +177,8 @@ export const getHashtagByTag = async (hashtag) => {
     const data = hashtagDoc.data();
     return {
       id: hashtagDoc.id,
-      name: data.tag || hashtagDoc.id, // Add name field for UI compatibility
+      name: data.tag || data.name || hashtagDoc.id, // Add name field for UI compatibility
+      count: data.count || data.usageCount || 0, // Support both count and usageCount
       ...data,
     };
   } catch (error) {
@@ -213,10 +216,12 @@ export const searchHashtags = async (searchTerm, maxResults = 10) => {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       // Check if hashtag starts with or contains the search term
-      if (data.tag && data.tag.includes(normalizedSearch)) {
+      const tagName = data.tag || data.name || doc.id;
+      if (tagName && tagName.toLowerCase().includes(normalizedSearch)) {
         hashtags.push({
           id: doc.id,
-          name: data.tag || doc.id, // Add name field for UI compatibility
+          name: tagName, // Add name field for UI compatibility
+          count: data.count || data.usageCount || 0, // Support both count and usageCount
           ...data,
         });
       }
