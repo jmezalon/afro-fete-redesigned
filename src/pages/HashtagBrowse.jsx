@@ -88,10 +88,10 @@ const HashtagBrowse = () => {
         return hashtagDetails || {
           id: followedTag,
           name: followedTag,
-          count: 0
+          usageCount: 0
         };
       })
-      .sort((a, b) => (b.count || 0) - (a.count || 0));
+      .sort((a, b) => (b.usageCount || 0) - (a.usageCount || 0));
   };
 
   const followedHashtagsWithDetails = getFollowedHashtagsWithDetails();
@@ -189,7 +189,7 @@ const HashtagBrowse = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-gray-600">
-                        {hashtag.count || 0} {hashtag.count === 1 ? 'use' : 'uses'}
+                        {hashtag.usageCount || 0} {hashtag.usageCount === 1 ? 'use' : 'uses'}
                       </p>
                       <HashtagFollowButton
                         hashtag={hashtag.name}
@@ -244,7 +244,7 @@ const HashtagBrowse = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-gray-600">
-                        {hashtag.count || 0} {hashtag.count === 1 ? 'use' : 'uses'}
+                        {hashtag.usageCount || 0} {hashtag.usageCount === 1 ? 'use' : 'uses'}
                       </p>
                       <HashtagFollowButton
                         hashtag={hashtag.name}
@@ -302,7 +302,7 @@ const HashtagBrowse = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-gray-600">
-                        {hashtag.count || 0} {hashtag.count === 1 ? 'use' : 'uses'}
+                        {hashtag.usageCount || 0} {hashtag.usageCount === 1 ? 'use' : 'uses'}
                       </p>
                       <HashtagFollowButton
                         hashtag={hashtag.name}

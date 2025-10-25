@@ -37,14 +37,15 @@ export const updateHashtagCount = async (hashtag) => {
     if (hashtagDoc.exists()) {
       // Hashtag exists, increment count
       await updateDoc(hashtagRef, {
-        count: increment(1),
+        usageCount: increment(1),
         lastUsed: new Date().toISOString(),
       });
     } else {
       // Create new hashtag document
       await setDoc(hashtagRef, {
         tag: normalizedHashtag,
-        count: 1,
+        name: normalizedHashtag, // Add name field for UI compatibility
+        usageCount: 1,
         createdAt: new Date().toISOString(),
         lastUsed: new Date().toISOString(),
       });
@@ -94,7 +95,7 @@ export const getTrendingHashtags = async (maxResults = 10) => {
   try {
     const q = query(
       collection(db, 'hashtags'),
-      orderBy('count', 'desc'),
+      orderBy('usageCount', 'desc'),
       limit(maxResults)
     );
 
@@ -202,7 +203,7 @@ export const searchHashtags = async (searchTerm, maxResults = 10) => {
     // Get all hashtags (in a production app, you'd want better search indexing)
     const q = query(
       collection(db, 'hashtags'),
-      orderBy('count', 'desc'),
+      orderBy('usageCount', 'desc'),
       limit(100) // Get top 100 to search through
     );
 
