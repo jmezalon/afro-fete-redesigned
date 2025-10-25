@@ -22,9 +22,8 @@ const CategoryCard = ({ category, onClick }) => {
     if (onClick) {
       onClick(category);
     } else {
-      // Default behavior: navigate to category page
-      const categorySlug = category.name.toLowerCase().replace(/\s+/g, '-');
-      navigate(`/category/${categorySlug}`);
+      // Default behavior: navigate to category page using category.id
+      navigate(`/category/${category.id || category.name.toLowerCase().replace(/\s+/g, '-')}`);
     }
   };
 
@@ -48,8 +47,8 @@ const CategoryCard = ({ category, onClick }) => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src={category.imageUrl}
-          alt={`${category.name} category`}
+          src={category.image || category.imageUrl}
+          alt={`${category.displayName || category.name} category`}
           className={`w-full h-full object-cover transition-all duration-500 ${
             imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
           } group-hover:scale-110`}
@@ -71,7 +70,7 @@ const CategoryCard = ({ category, onClick }) => {
       {/* Category Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
         <h3 className="text-white text-2xl md:text-3xl font-bold mb-2 drop-shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-          {category.name}
+          {category.displayName || category.name}
         </h3>
         <p className="text-white/90 text-sm md:text-base font-medium drop-shadow-md transform group-hover:scale-105 transition-transform duration-300">
           {category.hashtag.startsWith('#') ? category.hashtag : `#${category.hashtag}`}

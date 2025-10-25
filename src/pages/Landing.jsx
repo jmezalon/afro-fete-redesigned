@@ -7,6 +7,7 @@ import EventCard from '../components/EventCard';
 import Newsletter from '../components/Newsletter';
 import { getEvents, subscribeToEvents, searchEventsByHashtag } from '../services/eventService';
 import { getTrendingHashtags } from '../services/hashtagService';
+import { EVENT_CATEGORIES } from '../data/eventCategories';
 import { useAuth } from '../context/AuthContext';
 
 const Landing = () => {
@@ -25,18 +26,6 @@ const Landing = () => {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [eventsToShow, setEventsToShow] = useState(6);
-
-  // Categories matching the mockup
-  const categories = [
-    { name: 'Brunch', hashtag: '#brunch', imageUrl: 'https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=500' },
-    { name: 'Festivals', hashtag: '#festivals', imageUrl: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500' },
-    { name: 'Afterwork', hashtag: '#afterwork', imageUrl: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500' },
-    { name: 'Day Party', hashtag: '#dayparty', imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=500' },
-    { name: 'Nightlife', hashtag: '#nightlife', imageUrl: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=500' },
-    { name: 'Arts', hashtag: '#arts', imageUrl: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=500' },
-    { name: 'Concerts', hashtag: '#concerts', imageUrl: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=500' },
-    { name: 'Boat Rides', hashtag: '#boatrides', imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500' },
-  ];
 
   // Time filter tabs
   const timeFilters = ['TODAY', 'TOMORROW', 'THIS WEEKEND', 'THIS MONTH'];
@@ -120,8 +109,7 @@ const Landing = () => {
 
   // Handle category click - navigate to category page
   const handleCategoryClick = (category) => {
-    const categorySlug = category.name.toLowerCase().replace(/\s+/g, '-');
-    navigate(`/category/${categorySlug}`);
+    navigate(`/category/${category.id}`);
   };
 
   // Handle hashtag click
@@ -235,9 +223,9 @@ const Landing = () => {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category) => (
+            {EVENT_CATEGORIES.map((category) => (
               <CategoryCard
-                key={category.hashtag}
+                key={category.id}
                 category={category}
                 onClick={() => handleCategoryClick(category)}
               />
