@@ -588,7 +588,17 @@ const Profile = () => {
       {favoriteEvents.length > 0 && (
         <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">Favorites</h2>
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-gray-900 mb-3">Favorites</h2>
+              <p className="text-lg text-gray-600">
+                {favoriteEvents.length} {favoriteEvents.length === 1 ? 'event' : 'events'} favorited
+              </p>
+              {totalFavoritesPages > 1 && (
+                <p className="text-sm text-gray-500 mt-2">
+                  Showing {favoritesPage * favoritesPerPage + 1}-{Math.min((favoritesPage + 1) * favoritesPerPage, favoriteEvents.length)} of {favoriteEvents.length}
+                </p>
+              )}
+            </div>
 
             <div className="relative">
               {/* Navigation Buttons */}
