@@ -71,7 +71,7 @@ const PromotersList = () => {
   };
 
   const handlePromoterClick = (promoterId) => {
-    navigate(`/promoter/${promoterId}`);
+    navigate(`/user/${promoterId}`);
   };
 
   // Filter promoters based on search query

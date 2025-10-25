@@ -83,7 +83,7 @@ const EventCard = ({
   const handlePromoterClick = (e) => {
     e.stopPropagation();
     if (eventPromoterId) {
-      navigate(`/promoter/${eventPromoterId}`);
+      navigate(`/user/${eventPromoterId}`);
     }
   };
 

@@ -329,7 +329,17 @@ const PhotoGallery = () => {
                 <div className="space-y-3 text-gray-600">
                   <div className="flex items-center gap-2">
                     <User className="w-5 h-5 text-[#FF6B6B]" />
-                    <span>Posted by: {selectedPhoto.userName || 'Anonymous'}</span>
+                    <span>Posted by: </span>
+                    {selectedPhoto.userId ? (
+                      <button
+                        onClick={() => navigate(`/user/${selectedPhoto.userId}`)}
+                        className="text-[#FF6B6B] hover:text-[#ff5252] hover:underline font-semibold transition-colors"
+                      >
+                        {selectedPhoto.userName || 'Anonymous'}
+                      </button>
+                    ) : (
+                      <span>{selectedPhoto.userName || 'Anonymous'}</span>
+                    )}
                   </div>
 
                   {selectedPhoto.createdAt && (

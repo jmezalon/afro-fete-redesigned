@@ -306,7 +306,7 @@ const EventDetail = () => {
                       <User className="w-4 h-4 text-gray-500" />
                       <span className="text-sm text-gray-600">Posted by</span>
                       <button
-                        onClick={() => navigate(`/promoter/${promoter.uid}`)}
+                        onClick={() => navigate(`/user/${promoter.uid}`)}
                         className="text-sm font-semibold text-[#FF6B6B] hover:text-[#ff5252] hover:underline transition-colors"
                       >
                         {promoter.fullName || promoter.username}

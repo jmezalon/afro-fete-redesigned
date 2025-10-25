@@ -18,6 +18,7 @@ import HowItWorks from './pages/HowItWorks';
 import HashtagBrowse from './pages/HashtagBrowse';
 import PromoterProfile from './pages/PromoterProfile';
 import PromotersList from './pages/PromotersList';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/category/:categoryName" element={<CategoryView />} />
           <Route path="/events/:eventId" element={<EventDetail />} />
           <Route path="/promoters" element={<PromotersList />} />
+          <Route path="/user/:userId" element={<UserProfile />} />
           <Route path="/promoter/:promoterId" element={<PromoterProfile />} />
           <Route path="/photos" element={<PhotoGallery />} />
           <Route path="/hashtags" element={<HashtagBrowse />} />
