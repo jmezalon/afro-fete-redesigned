@@ -20,7 +20,7 @@ const Landing = () => {
   const [events, setEvents] = useState([]);
   const [displayedEvents, setDisplayedEvents] = useState([]);
   const [trendingHashtags, setTrendingHashtags] = useState([]);
-  const [activeTimeFilter, setActiveTimeFilter] = useState('TODAY');
+  const [activeTimeFilter, setActiveTimeFilter] = useState('THIS MONTH');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedHashtag, setSelectedHashtag] = useState(null);
   const [loading, setLoading] = useState(true);
