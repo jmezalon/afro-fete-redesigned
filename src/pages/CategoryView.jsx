@@ -21,7 +21,7 @@ const CategoryView = () => {
   const [events, setEvents] = useState([]);
   const [displayedEvents, setDisplayedEvents] = useState([]);
   const [trendingHashtags, setTrendingHashtags] = useState([]);
-  const [activeTimeFilter, setActiveTimeFilter] = useState('TODAY');
+  const [activeTimeFilter, setActiveTimeFilter] = useState('THIS MONTH');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [eventsToShow, setEventsToShow] = useState(6);
