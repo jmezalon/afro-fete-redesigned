@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, ProtectedRoute, PublicRoute } from './context/AuthContext';
+import { ScrollToTop } from './components';
 import './App.css';
 
 // Pages
@@ -23,6 +24,7 @@ import UserProfile from './pages/UserProfile';
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         <Routes>
           {/* Public Routes */}
